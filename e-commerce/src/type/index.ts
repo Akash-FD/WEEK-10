@@ -9,3 +9,10 @@ export interface LoginTypes {
     email : string,
     password : string
 }
+
+export interface User {
+    id : number,
+    name : string,
+    email : string,
+    role : "Buyer" | "Seller"
+}

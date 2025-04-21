@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
+    let flag = 0
   const [formData, setFormData] = useState<LoginTypes>({
     email: "",
     password: "",
@@ -28,14 +29,17 @@ export default function Login() {
      try{
           const res = await LoginUser(formData)
           localStorage.setItem("token", res.data.token)
-         
           alert(res.data?.message)
+          flag = 1
           
         }catch(err){
             alert("Login failed")
             console.log(err)
         }
-        redirect("/")
+        if (flag === 1) {
+            redirect("/")
+        }
+            
     
    
     //   if (res.status === 201) {
