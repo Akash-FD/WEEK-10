@@ -1,5 +1,5 @@
 "use client"
-import { LoginTypes, RegisterTypes, User } from "@/type";
+import { adminForm, LoginTypes, RegisterTypes, User } from "@/type";
 import api from "./api";
 
 
@@ -7,8 +7,10 @@ import api from "./api";
 export const RegisterUser =  (data: RegisterTypes) => api.post("/auth/register", data)
 
 export const LoginUser =  (data: LoginTypes) => api.post<any>("/auth/login", data)
+export const addProduct =  (data: adminForm) => api.post("/products", data)
 
-export const getUser = async ():Promise<User | null>  =>{
+export const getUser = async():Promise<User | null>  =>{
+   
     try{
         const token = localStorage.getItem("token")
         console.log(token)
@@ -18,7 +20,8 @@ export const getUser = async ():Promise<User | null>  =>{
                 Authorization: `Bearer ${token}`,
             },
         }) 
-        return console.log(res.data) ,res.data
+        console.log(res.data) 
+        return res.data
         
     }catch(err){
         console.log("hello",err)

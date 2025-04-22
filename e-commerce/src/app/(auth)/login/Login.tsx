@@ -56,7 +56,7 @@ export default function Login() {
   return (
     <div className="bg-gradient-to-t from-white py-14 pb-48">
       <div className=" w-[430px] max-sm:w-[300px] max-sm:pt-3 m-auto px-8 my-10 bg-white py-6 shadow-lg shadow-neutral-500 rounded-xl">
-        <h2 className="text-3xl py-5 text-blue-500">Sign in</h2>
+        <h2 className="text-3xl py-5 text-blue-500">Login</h2>
         <form action="" onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="email"

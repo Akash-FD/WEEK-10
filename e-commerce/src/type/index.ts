@@ -2,7 +2,7 @@ export interface RegisterTypes {
     name : string,
     email : string,
     password : string,
-    role : "Buyer" | "Seller"
+    role : "Buyer" | "Seller | Admin"
 }
 
 export interface LoginTypes {
@@ -14,5 +14,13 @@ export interface User {
     id : number,
     name : string,
     email : string,
-    role : "Buyer" | "Seller"
+    role : "Buyer" | "Seller | Admin"
+}
+
+export interface adminForm {
+    name : string,
+    description : string,
+    price : number,
+    quantity : number,
+    images : string[]
 }

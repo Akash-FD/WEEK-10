@@ -15,11 +15,7 @@ export default function Register() {
     role: "Buyer",
   });
 
-  // const [name, setName] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const [confirmpassword, setConfirmpassword] = useState("");
-  // const [role, setRole] = useState('Buyer')
   const [error, setError] = useState("");
   console.log(formData);
 
@@ -128,6 +124,8 @@ export default function Register() {
           >
             <option value="Buyer">Buyer</option>
             <option value="Seller">Seller</option>
+            <option value="Admin">Admin</option>
+
           </select>
 
           {error && <p className="text-red-500">{error}</p>}
