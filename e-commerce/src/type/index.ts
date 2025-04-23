@@ -20,7 +20,15 @@ export interface User {
 export interface adminForm {
     name : string,
     description : string,
-    price : number,
-    quantity : number,
+    price : string,
+    quantity : string,
+    images : File[]
+}
+export interface allProductTypes {
+    id: number,
+    name : string,
+    description : string,
+    price : string,
+    quantity : string,
     images : string[]
 }

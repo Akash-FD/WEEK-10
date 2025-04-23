@@ -1,13 +1,26 @@
 "use client"
-import { adminForm, LoginTypes, RegisterTypes, User } from "@/type";
+import {  LoginTypes, RegisterTypes, User } from "@/type";
 import api from "./api";
 
 
 
 export const RegisterUser =  (data: RegisterTypes) => api.post("/auth/register", data)
 
-export const LoginUser =  (data: LoginTypes) => api.post<any>("/auth/login", data)
-export const addProduct =  (data: adminForm) => api.post("/products", data)
+export const LoginUser =  (data: LoginTypes) => api.post("/auth/login", data)
+
+export const addProduct =  (data: FormData ) => api.post("/products", data,{
+    headers: {
+        Authorization:`Bearer ${localStorage.getItem("token")}`,
+    },
+})
+export const GetAllProduct =  () => api.get("/products")
+
+export const DeleteProduct =  (id:number) => api.delete(`/products/${id}`,{
+    
+    headers: {
+        Authorization:`Bearer ${localStorage.getItem("token")}`,
+    },
+})
 
 export const getUser = async():Promise<User | null>  =>{
    
@@ -26,6 +39,5 @@ export const getUser = async():Promise<User | null>  =>{
     }catch(err){
         console.log("hello",err)
         return null
-
     }
 }
