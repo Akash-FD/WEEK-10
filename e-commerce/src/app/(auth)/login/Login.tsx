@@ -1,6 +1,5 @@
 "use client";
 
-
 import { LoginUser } from "@/lib/auth";
 import { LoginTypes } from "@/type";
 import Link from "next/link";
@@ -8,13 +7,11 @@ import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
-    let flag = 0
+  let flag = 0;
   const [formData, setFormData] = useState<LoginTypes>({
     email: "",
     password: "",
   });
-
-
 
   const hanldeChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,34 +20,30 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-     try{
-          const res = await LoginUser(formData)
-          localStorage.setItem("token", res.data.token)
-          alert(res.data?.message)
-          flag = 1
-          
-        }catch(err){
-            alert("Login failed")
-            console.log(err)
-        }
-        if (flag === 1) {
-            redirect("/")
-        }
-            
-    
-   
+    try {
+      const res = await LoginUser(formData);
+      localStorage.setItem("token", res.data.token);
+      alert(res.data?.message);
+      flag = 1;
+    } catch (err) {
+      alert("Login failed");
+      console.log(err);
+    }
+    if (flag === 1) {
+      redirect("/");
+    }
+
     //   if (res.status === 201) {
     //     alert("Login successful");
-    //     redirect("/");   
+    //     redirect("/");
     //   }else{
     //     alert("Login failed");
     //     redirect("/login");
     //   }
     // };
-   
   };
 
   return (
@@ -79,9 +72,10 @@ export default function Login() {
           </button>
         </form>
         <div className="text-center my-2">
-        <span>if you are not Register? </span>
-        <Link href="/register" className="text-blue-500">register</Link>
-
+          <span>if you are not Register? </span>
+          <Link href="/register" className="text-blue-500">
+            register
+          </Link>
         </div>
       </div>
     </div>

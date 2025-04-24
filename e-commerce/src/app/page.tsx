@@ -1,9 +1,52 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { GetAllProduct } from "@/lib/auth";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
+const home = () => {
+  const [productData, setProductData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchAllProduct = async () => {
+      try {
+        const res = await GetAllProduct();
+
+        setProductData(res.data.data);
+      } catch (err) {
+        console.log("somthing went worng", err);
+      }
+    };
+    fetchAllProduct();
+  }, []);
+
   return (
-   <>
-   hello user
-   </>
+    <div className="flex container mx-auto">
+    <div className="min-w-[220px] ">
+      <h1 className="text-2xl">Shor by</h1>
+
+    </div>
+      <div className="flex flex-wrap gap-5">
+        {productData.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className="card bg-gray-200 w-[280px] max-lg:w-[200px] max-md:w-[140px] h-[450px] p-2 drop-shadow-xl hover:scale-105 transition-all duration-200"
+            >
+              <img src={item.images[0]} alt="" className="object-contain" />
+              <p className="my-2 max-lg:text-sm">{item.name}</p>
+              <div className="flex justify-between items-center gap-4 ">
+                <p className="">Quntity : {item.quantity}</p>
+                <p>${item.price}</p>
+              </div>
+                <Link href={`/product/${item.id}`} className="bg-black text-white w-full py-2 rounded">View details</Link>
+
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
-}
+};
+
+export default home;

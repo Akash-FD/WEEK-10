@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import { addProduct } from "@/lib/auth"; 
+import React, { useEffect, useState } from "react";
+import { addProduct, EditProduct } from "@/lib/auth"; 
 import { adminForm } from "@/type";
+import { useEditProduct } from "@/context/ProductContext";
+import { useRouter } from "next/navigation";
 
 
 const ProductForm = () => {
+
+  const {editData, setEditData, productId, setProductId} =useEditProduct()
+
+  const router = useRouter()
+
   const [formData, setFormData] = useState<adminForm>({
     name: "",
     description: "",
@@ -14,6 +21,21 @@ const ProductForm = () => {
   });
 
   const [loading, setLoading] = useState(false); 
+
+  useEffect(() => {
+    if (productId) {
+      setFormData({
+        name: editData?.name || "",
+        description: editData?.description || "",
+        price: editData?.price || "",
+        quantity: editData?.quantity || "",
+        images: [],
+      })
+      
+    }
+    
+  }, [productId])
+  
 
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +66,8 @@ const ProductForm = () => {
     formDataObj.append("price", formData.price);
     formDataObj.append("quantity", formData.quantity);
     formData.images.forEach((image) => {
-      formDataObj.append("images", image);
+    formDataObj.append("images", image);
     });
-
 
     // const formDataObj:adminForm = {
     //   name: formData.name,
@@ -59,23 +80,36 @@ const ProductForm = () => {
     
     try
      {
-      const response = await addProduct(formDataObj);
-      console.log("Product added:", response.data);
-      alert("Product added successfully!");
+      if(productId){
+        const response = await EditProduct(formDataObj, productId);
+        console.log("Product added:", response.data);
+        alert("Product added successfully!");
+        router.push("/admin/allProducts")
+      
+      }else{
+
+        const response = await addProduct(formDataObj);
+        console.log("Product added:", response.data);
+        alert("Product added successfully!");
+        router.push("/admin/allProducts")
+      }
+     
     } catch (err) {
       console.error("Error adding product:", err);
       alert("Error adding product. Please try again.");
     } finally {
       setLoading(false);
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        quantity: "",
+        images: [],
+      });
+      setProductId(null)
     }
 
-    setFormData({
-      name: "",
-      description: "",
-      price: "",
-      quantity: "",
-      images: [],
-    });
+
   };
 
   return (

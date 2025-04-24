@@ -1,13 +1,17 @@
 "use client";
 
-import { DeleteProduct, EditProduct, GetAllProduct } from "@/lib/auth";
+import { useEditProduct } from "@/context/ProductContext";
+import { DeleteProduct, GetAllProduct } from "@/lib/auth";
 import { allProductTypes } from "@/type";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const allProduct = () => {
-  const [productData, setProductData] = useState<allProductTypes[]>([]);
-  const [updatedData, setUpdatedData] = useState<allProductTypes>({} as allProductTypes);
+  const [productData, setProductData] = useState<any[]>([]);
+  const { setEditData, setProductId } = useEditProduct()
+  const router = useRouter()
 
+// 
   useEffect(() => {
     const fetchAllProduct = async () => {
       try {
@@ -38,33 +42,30 @@ const allProduct = () => {
     }
   };
 
-  const handleEdit = async(item:FormData, id:number) => {
-    try{
-
-      const res = await EditProduct(item , id)
-
-    }catch(err){
-        console.log("somthing went worng", err);
-    }
+  const handleEdit = async(item:allProductTypes) => {
+    setEditData(item)
+    setProductId(item.id)
+ 
+    router.push("/admin/addProduct")
 
   }
     
   return (
     <div className="flex flex-wrap gap-5">
-      {productData.map((item) => {
+      {productData.length !==0 ? productData.map((item) => {
         return (
           <div
             key={item.id}
             className="card bg-gray-200 w-[280px] max-lg:w-[200px] max-md:w-[140px] h-[450px] p-2 drop-shadow-xl hover:scale-105 transition-all duration-200"
           >
-            <img src={item.images[0]} alt="" className="object-contain my-auto" />
+            <img src={item.images[0]} alt="" className="object-contain"/>
             <p className="my-2 max-lg:text-sm">{item.name}</p>
             <div className="flex justify-between items-center gap-4 ">
               <p className="">Quntity : {item.quantity}</p>
               <p>${item.price}</p>
             </div>
             <div className="flex justify-between items-center gap-4 ">
-             <button className="bg-yellow-500 text-white" onClick={()=>handleEdit(item,id)}>Edit</button>
+             <button className="bg-yellow-500 text-white" onClick={()=>handleEdit(item)}>Edit</button>
               <button
                 className="bg-red-500 text-white"
                 onClick={() => hanldeDelete(item.id)}
@@ -74,7 +75,10 @@ const allProduct = () => {
             </div>
           </div>
         );
-      })}
+      }) 
+    : 
+    <h1>No product added</h1>
+    }
     </div>
   );
 };
