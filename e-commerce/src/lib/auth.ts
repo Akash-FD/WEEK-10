@@ -21,6 +21,11 @@ export const DeleteProduct =  (id:number) => api.delete(`/products/${id}`,{
         Authorization:`Bearer ${localStorage.getItem("token")}`,
     },
 })
+export const EditProduct =  (data: FormData,id:number) => api.put(`/products/${id}`, data,{
+    headers: {
+        Authorization:`Bearer ${localStorage.getItem("token")}`,
+    },
+})
 
 export const getUser = async():Promise<User | null>  =>{
    
