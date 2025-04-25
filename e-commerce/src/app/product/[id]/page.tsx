@@ -1,14 +1,20 @@
 "use client";
-import { ProductInfo } from "@/lib/auth";
-import { allProductTypes } from "@/type";
+import { AddProductCart, ProductInfo } from "@/lib/api";
+import { addtocart, allProductTypes } from "@/type";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const productInfo = () => {
   const params = useParams();
-  const [productDataById, setProductDataById] =
-    useState<allProductTypes | null>(null);
+  const [productDataById, setProductDataById] = useState<allProductTypes | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+
   console.log(params.id);
+
+  const CartData: addtocart = {
+    productId: Number(params.id),
+    quantity: quantity,
+  };
   useEffect(() => {
     const fetchId = async () => {
       try {
@@ -23,6 +29,15 @@ const productInfo = () => {
     };
     fetchId();
   }, [params.id]);
+
+  const handleAddToCart = async () => {
+    try {
+      const res = await AddProductCart(CartData);
+      alert("add to cart succssecfully");
+    } catch (err) {
+      console.log("somthng went wrong", err);
+    }
+  };
 
   return (
     <div className="w-[80%] m-auto max-sm:w-[85%]">
@@ -69,8 +84,27 @@ const productInfo = () => {
                   $ {productDataById?.price}
                 </p>
               </div>
-
-              <button className="py-2 w-[180px] px-5 text-md text-white bg-red-600 hover:bg-red-800 max-sm:text-sm max-sm:w-[120px]">
+              <div className="flex items-center">
+                <button
+                  className="bg-black text-white px-2 text-lg"
+                  onClick={() => {
+                    if (quantity > 1) setQuantity(quantity - 1);
+                  }}
+                >
+                  -
+                </button>
+                <p className="bg-gray-200 px-2">{quantity}</p>
+                <button
+                  className="bg-black text-white px-2 text-lg"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+              <button
+                className="py-2 w-[180px] px-5 text-md text-white bg-black hover:bg-red-800 max-sm:text-sm max-sm:w-[120px]"
+                onClick={handleAddToCart}
+              >
                 Add to cart
               </button>
             </div>

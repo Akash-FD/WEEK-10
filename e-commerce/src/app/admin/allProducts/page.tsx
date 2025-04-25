@@ -1,7 +1,7 @@
 "use client";
 
 import { useEditProduct } from "@/context/ProductContext";
-import { DeleteProduct, GetAllProduct } from "@/lib/auth";
+import { DeleteProduct, GetAllProduct } from "@/lib/api";
 import { allProductTypes } from "@/type";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";

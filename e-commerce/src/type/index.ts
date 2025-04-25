@@ -20,6 +20,7 @@ export interface User {
 export interface adminForm {
     name : string,
     description : string,
+    category:string,
     price : string,
     quantity : string,
     images : File[]
@@ -28,7 +29,23 @@ export interface allProductTypes {
     id: number,
     name : string,
     description : string,
+    category:string,
     price : string,
     quantity : string,
     images : string[]
+}
+export interface addtocart {
+    productId : number,
+    quantity : number,
+   
+}
+
+export interface cartdataTypes {
+    id: number,
+    productId : number
+    name : string,
+    price : string,
+    subtotal : number,
+    image : string,
+    quantity : number,
 }

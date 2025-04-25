@@ -23,3 +23,191 @@
     <div id="root" data-payload="eyJjZG5CYXNlIjoiaHR0cHM6Ly9jZG4ubmdyb2suY29tLyIsImNvZGUiOiI2MDI0IiwiaG9zdHBvcnQiOiI3MmZmLTEyNS0yMC0yMTYtMTc4Lm5ncm9rLWZyZWUuYXBwIiwibWVzc2FnZSI6IllvdSBhcmUgYWJvdXQgdG8gdmlzaXQgNzJmZi0xMjUtMjAtMjE2LTE3OC5uZ3Jvay1mcmVlLmFwcCwgc2VydmVkIGJ5IDEyNS4yMC4yMTYuMTc4LiBUaGlzIHdlYnNpdGUgaXMgc2VydmVkIGZvciBmcmVlIHRocm91Z2ggbmdyb2suY29tLiBZb3Ugc2hvdWxkIG9ubHkgdmlzaXQgdGhpcyB3ZWJzaXRlIGlmIHlvdSB0cnVzdCB3aG9ldmVyIHNlbnQgdGhlIGxpbmsgdG8geW91LiIsInNlcnZpbmdJUCI6IjEyNS4yMC4yMTYuMTc4IiwidGl0bGUiOiJPSyJ9"></div>
   </body>
 </html>
+
+
+<!-- --------------------------------------------------- -->
+<!-- "use client";
+
+import React, { useState } from "react";
+
+interface adminForm {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  images: File[]; // Now images is a File[] array
+}
+
+const ProductForm = () => {
+  const [formData, setFormData] = useState<adminForm>({
+    name: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    images: [], // Initial empty File array
+  });
+
+  // Handle form data changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle file input change for images
+  const removeImage = (index: number) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      images: prevState.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setFormData((prevState) => ({
+        ...prevState,
+        images: [...prevState.images, ...newFiles],
+      }));
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Log the formData object to the console
+    console.log(formData);
+    // Here you would typically call your API to submit the data
+    // Example: axios.post("/your-api-endpoint", formData);
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-2xl border border-gray-200">
+      <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
+        Add New Product
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Product Name */}
+          <div>
+            <label htmlFor="name" className="block text-base font-semibold text-gray-700 mb-2">
+              Product Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              placeholder="Enter product name"
+              required
+            />
+          </div>
+
+          {/* Product Description */}
+          <div>
+            <label htmlFor="description" className="block text-base font-semibold text-gray-700 mb-2">
+              Product Description
+            </label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              placeholder="Enter product description"
+              required
+            />
+          </div>
+
+          {/* Price */}
+          <div>
+            <label htmlFor="price" className="block text-base font-semibold text-gray-700 mb-2">
+              Price
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              placeholder="Enter product price"
+              required
+            />
+          </div>
+
+          {/* Quantity */}
+          <div>
+            <label htmlFor="quantity" className="block text-base font-semibold text-gray-700 mb-2">
+              Quantity
+            </label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              placeholder="Enter product quantity"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Images */}
+        <div>
+          <label htmlFor="images" className="block text-base font-semibold text-gray-700 mb-2">
+            Product Images
+          </label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            multiple
+            onChange={handleFileChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+            required
+          />
+        </div>
+        
+        {/* Image Previews */}
+        {formData.images.length > 0 && (
+          <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
+            {formData.images.map((img, index) => (
+              <div key={index} className="relative w-full h-32 border rounded-lg overflow-hidden shadow-sm">
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt={`preview-${index}`}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-1 right-1 bg-red-600 text-white text-lg rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition"
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="px-8 py-3 mt-4 text-lg font-semibold text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+          >
+            Add Product
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default ProductForm; -->

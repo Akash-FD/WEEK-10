@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { addProduct, EditProduct } from "@/lib/auth"; 
+import { addProduct, EditProduct } from "@/lib/api"; 
 import { adminForm } from "@/type";
 import { useEditProduct } from "@/context/ProductContext";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,7 @@ const ProductForm = () => {
   const [formData, setFormData] = useState<adminForm>({
     name: "",
     description: "",
+    category: "",
     price: "",
     quantity: "",
     images: [],
@@ -27,6 +28,7 @@ const ProductForm = () => {
       setFormData({
         name: editData?.name || "",
         description: editData?.description || "",
+        category: editData?.category || "",
         price: editData?.price || "",
         quantity: editData?.quantity || "",
         images: [],
@@ -38,7 +40,7 @@ const ProductForm = () => {
   
 
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -55,6 +57,12 @@ const ProductForm = () => {
       }));
     }
   };
+  const removeImage = (index: number) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      images: prevState.images.filter((_, i) => i !== index),
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +71,8 @@ const ProductForm = () => {
     const formDataObj = new FormData();
     formDataObj.append("name", formData.name);
     formDataObj.append("description", formData.description);
+    formDataObj.append("category", formData.category);
+
     formDataObj.append("price", formData.price);
     formDataObj.append("quantity", formData.quantity);
     formData.images.forEach((image) => {
@@ -102,6 +112,7 @@ const ProductForm = () => {
       setFormData({
         name: "",
         description: "",
+        category:"",
         price: "",
         quantity: "",
         images: [],
@@ -147,6 +158,19 @@ const ProductForm = () => {
             required
           />
         </div>
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Category
+          </label>
+        <select name="category" id="category" onChange={handleChange} className="w-full p-2 border rounded">
+        <option value="">Select Category</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+        <option value="Sports & Outdoors">Sports & Outdoors</option>
+        <option value="Books">Books</option>
+        <option value="Toys & Games">Toys & Games</option>
+        <option value="Footwear">Footwear</option>
+        </select>
 
         <div className="mb-4">
           <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -194,6 +218,26 @@ const ProductForm = () => {
             required
           />
         </div>
+        {formData.images.length > 0 && (
+          <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
+            {formData.images.map((img, index) => (
+              <div key={index} className="relative w-full h-32 border rounded-lg overflow-hidden shadow-sm">
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt={`preview-${index}`}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-1 right-1 bg-red-600 text-white text-lg rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition"
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-center">
           <button

@@ -1,41 +1,13 @@
 "use client";
 import { LoginTypes, RegisterTypes, User } from "@/type";
-import api from "./api";
+import { api } from "./api";
+
 
 export const RegisterUser = (data: RegisterTypes) =>
   api.post("/auth/register", data);
 
 
 export const LoginUser = (data: LoginTypes) => api.post("/auth/login", data);
-
-
-export const addProduct = (data: FormData) =>
-  api.post("/products", data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-
-export const GetAllProduct = () => api.get("/products");
-
-
-export const DeleteProduct = (id: number) =>
-  api.delete(`/products/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-
-export const EditProduct = (data: FormData, id: number) =>
-  api.put(`/products/${id}`, data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  export const ProductInfo = (id: number) => api.get(`/products/${id}`);
 
 
 export const getUser = async (): Promise<User | null> => {
