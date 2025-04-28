@@ -4,8 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import { RegisterUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { RegisterTypes } from "@/type";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterTypes>({
@@ -18,6 +18,7 @@ export default function Register() {
   const [confirmpassword, setConfirmpassword] = useState("");
   const [error, setError] = useState("");
   console.log(formData);
+  const router = useRouter()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -58,13 +59,13 @@ export default function Register() {
     try {
       await RegisterUser(formData);
       alert("Registration successful");
+      router.push("/login");
     }
   
      catch (err) {
       alert("Registration failed");
       console.log(err);
     }
-    redirect("/login");
   };
 
  

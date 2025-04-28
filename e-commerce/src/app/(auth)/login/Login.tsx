@@ -1,17 +1,18 @@
 "use client";
 
-import { LoginUser } from "@/lib/auth";
-import { LoginTypes } from "@/type";
+import { getUser, LoginUser } from "@/lib/auth";
+import { LoginTypes, User } from "@/type";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
-  let flag = 0;
+
   const [formData, setFormData] = useState<LoginTypes>({
     email: "",
     password: "",
   });
+  const router = useRouter()
 
   const hanldeChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -26,24 +27,21 @@ export default function Login() {
     try {
       const res = await LoginUser(formData);
       localStorage.setItem("token", res.data.token);
+       const userRes = await getUser()
+       console.log(userRes.data.role);
       alert(res.data?.message);
-      flag = 1;
+      if (userRes.data.role === "ADMIN"){
+        router.push("/admin")
+      }
+      else{
+        router.push("/")
+      } 
+     
     } catch (err) {
       alert("Login failed");
       console.log(err);
     }
-    if (flag === 1) {
-      redirect("/");
-    }
-
-    //   if (res.status === 201) {
-    //     alert("Login successful");
-    //     redirect("/");
-    //   }else{
-    //     alert("Login failed");
-    //     redirect("/login");
-    //   }
-    // };
+  
   };
 
   return (

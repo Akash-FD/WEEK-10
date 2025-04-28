@@ -49,3 +49,31 @@ export interface cartdataTypes {
     image : string,
     quantity : number,
 }
+
+export interface orderDataTypes {
+    producyt_id: number,
+    quantity : number,
+}
+export interface orderDataObj{
+    products : orderDataTypes[],
+    address : string,
+}
+
+export interface AllOrderData{
+    order_id:number,
+    status:string,
+    buyer:{
+        id:number,
+        name:string
+    },
+    products:{
+        product_id:number,
+        name:string,    
+        quantity:number
+    }[]
+}
+
+export interface Status{
+    status :string
+}
+

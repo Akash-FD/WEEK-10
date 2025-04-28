@@ -33,7 +33,6 @@ const ProductForm = () => {
         quantity: editData?.quantity || "",
         images: [],
       })
-      
     }
     
   }, [productId])
@@ -124,44 +123,53 @@ const ProductForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Product Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product name"
-            required
-          />
-        </div>
+<div className="px-8 bg-white rounded-2xl shadow-lg">
+  <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Add New Product</h2>
+  <form onSubmit={handleSubmit} className="space-y-6">
+    
+    <div>
+      <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
+        Product Name
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter product name"
+        required
+      />
+    </div>
 
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Product Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product description"
-            required
-          />
-        </div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Category
-          </label>
-        <select name="category" id="category" onChange={handleChange} className="w-full p-2 border rounded">
+    <div>
+      <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
+        Product Description
+      </label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter product description"
+        required
+      />
+    </div>
+
+    <div>
+      <label htmlFor="category" className="block text-sm font-semibold text-gray-700 mb-1">
+        Category
+      </label>
+      <select
+        name="category"
+        id="category"
+        onChange={handleChange}
+        className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      >
         <option value="">Select Category</option>
         <option value="Clothing">Clothing</option>
         <option value="Electronics">Electronics</option>
@@ -170,86 +178,91 @@ const ProductForm = () => {
         <option value="Books">Books</option>
         <option value="Toys & Games">Toys & Games</option>
         <option value="Footwear">Footwear</option>
-        </select>
-
-        <div className="mb-4">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-            Price
-          </label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product price"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
-            Quantity
-          </label>
-          <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product quantity"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="images" className="block text-sm font-medium text-gray-700">
-            Product Images
-          </label>
-          <input
-            type="file"
-            id="images"
-            name="images"
-            multiple
-            onChange={handleFileChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        {formData.images.length > 0 && (
-          <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
-            {formData.images.map((img, index) => (
-              <div key={index} className="relative w-full h-32 border rounded-lg overflow-hidden shadow-sm">
-                <img
-                  src={URL.createObjectURL(img)}
-                  alt={`preview-${index}`}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeImage(index)}
-                  className="absolute top-1 right-1 bg-red-600 text-white text-lg rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition"
-                >
-                  x
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={loading}
-          >
-            {loading ? "Adding..." : "Add Product"}
-          </button>
-        </div>
-      </form>
+      </select>
     </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div>
+        <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-1">
+          Price
+        </label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+          className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter product price"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="quantity" className="block text-sm font-semibold text-gray-700 mb-1">
+          Quantity
+        </label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          value={formData.quantity}
+          onChange={handleChange}
+          className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter product quantity"
+          required
+        />
+      </div>
+    </div>
+
+    <div>
+      <label htmlFor="images" className="block text-sm font-semibold text-gray-700 mb-1">
+        Product Images
+      </label>
+      <input
+        type="file"
+        id="images"
+        name="images"
+        multiple
+        onChange={handleFileChange}
+        className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
+    </div>
+
+    {formData.images.length > 0 && (
+      <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {formData.images.map((img, index) => (
+          <div key={index} className="relative w-full h-32 border border-gray-300 rounded-lg overflow-hidden shadow-md">
+            <img
+              src={URL.createObjectURL(img)}
+              alt={`preview-${index}`}
+              className="w-full h-full object-cover"
+            />
+            <button
+              type="button"
+              onClick={() => removeImage(index)}
+              className="absolute top-1 right-1 bg-red-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition"
+            >
+              &times;
+            </button>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div className="flex justify-center">
+      <button
+        type="submit"
+        className="px-8 py-3 mt-6 text-white bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        disabled={loading}
+      >
+        {loading ? "Adding..." : "Add Product"}
+      </button>
+    </div>
+  </form>
+</div>
+
   );
 };
 

@@ -1,4 +1,4 @@
-import { addtocart } from "@/type";
+import { addtocart, orderDataObj, Status } from "@/type";
 import axios from "axios";
 
 export const api = axios.create({
@@ -33,24 +33,32 @@ export const EditProduct = (data: FormData, id: number) =>
 
 export const ProductInfo = (id: number) => api.get(`/products/${id}`);
 
+// cart apis
+
 export const AddProductCart = (data: addtocart) =>
   api.post(`/cart`, data, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
 export const GetCartDetails = () =>
   api.get(`/cart`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
 export const UpdateCartDetails = (id: number, quantity: number) =>
-  api.put(`/cart/${id}`, quantity, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  api.put(
+    `/cart/${id}`,
+    { quantity },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
 
 export const RemoveCartProduct = (id: number) =>
   api.delete(`/cart/${id}`, {
@@ -58,3 +66,50 @@ export const RemoveCartProduct = (id: number) =>
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
+// get all  users
+
+export const GetAllUsers = () =>
+  api.get("admin/users", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+export const  DeleteUser = (id: number) =>
+  api.delete(`/admin/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+// order apis
+
+export const PlaceOrder = (orderData: orderDataObj) =>
+  api.post(`/orders`, orderData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+export const GetAllOrders = () =>
+  api.get(`/orders`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+export const DeleteOneOrder = (id:number) =>
+  api.delete(`/orders/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  export const EditOneOrder = (id:number, data:Status) =>
+    api.put(`/orders/${id}/status`, data , {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+

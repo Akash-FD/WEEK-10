@@ -4,39 +4,64 @@ import { useEffect, useState } from "react"
 import { getUser } from "@/lib/auth"
 import Link from "next/link";
 import { FaCartShopping } from "react-icons/fa6";
+import { User } from "@/type";
+import { GetCartDetails } from "@/lib/api";
+
 
 
 const Navbar = () => {
-    interface User {
-        name: string;
-        [key: string]: any; // To allow additional properties if needed
+  const [user, setUser] = useState<User | null>(null)
+  const [cartLength, setCartLength] = useState<number>(0)
+  console.log(cartLength);
+
+  console.log(user);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await getUser()
+      setUser(res.data)
     }
-    
-    const [user, setUser] = useState<User>({ name: "" })
-    console.log(user);
-    
-    useEffect(() => {
-         const fetchUser = async ()=> {
-                const res: any = await getUser()
-                setUser(res)
-          }
-          fetchUser()
-     
-    }, [])
-    
+    fetchUser()
+
+  }, [])
+
+   useEffect(() => {
+    const cartLength = async () => {
+      const res = await GetCartDetails()
+      setCartLength(res.data.items.length)
+    }
+    cartLength()
+  }, [])
+
 
   return (
-    <div className="sticky top-0 z-10 bg-white">
-        <nav className="flex justify-between items-center border-b-2 mb-3 shadow px-4 py-4">
-            <Link href="/" className="text-3xl font-sans">Shop</Link>
-            <div className='flex gap-4 items-center'>
-           <Link href="/cart"><FaCartShopping className="text-2xl"/></Link>
-            <Link href="/login" className='bg-white text-black px-3 py-1'>Login</Link>
-            <button className='bg-white text-black px-3 py-1'>user</button>
-            </div>
-            
-        </nav>
+    <div className="sticky top-0 z-20 bg-white shadow-md">
+      <nav className="flex justify-between items-center border-b px-6 py-4">
+        <Link href="/" className="text-4xl font-bold font-sans text-gray-800">Shop</Link>
+
+        <div className="flex items-center gap-6">
+
+          <Link href="/cart" className="relative">
+            <FaCartShopping className="text-3xl text-gray-700 hover:text-black transition" />
+            {cartLength > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartLength}
+              </span>
+            )}
+          </Link>
+
+          <Link href="/login" className="bg-black text-white text-lg font-medium px-4 py-2 rounded-full hover:bg-gray-800 transition">
+            Login
+          </Link>
+
+          <button className="bg-black text-white text-lg font-medium px-4 py-2 rounded-full hover:bg-gray-800 transition">
+            {user === null ? "No User": user?.name}
+          </button>
+
+        </div>
+      </nav>
     </div>
+
   )
 }
 
