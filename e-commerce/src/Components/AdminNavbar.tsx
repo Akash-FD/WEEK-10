@@ -32,12 +32,12 @@ const AdminNavbar = () => {
   return (
     <div className="sticky top-0 z-30 bg-white shadow-sm">
       <nav className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        {/* Left: Logo */}
+
         <Link href="/" className="text-2xl font-bold text-gray-800 hover:text-black transition">
           Admin
         </Link>
 
-        {/* Right: User Section */}
+   
         <div className="relative flex items-center gap-4">
           {!user ? (
             <Link
@@ -51,7 +51,7 @@ const AdminNavbar = () => {
               <FaUserCircle size={30} className="text-gray-600" />
               <span className="text-gray-700 font-semibold hidden sm:inline">{user.name}</span>
 
-              {/* Dropdown */}
+        
               <div
                 className={`absolute right-0 top-14 w-64 bg-white rounded-lg shadow-lg p-4 space-y-4 transition-all duration-300 ${
                   openDropdown ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"

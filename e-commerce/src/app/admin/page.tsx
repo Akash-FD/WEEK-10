@@ -4,7 +4,7 @@ import React from 'react'
 const adminDashboard = () => {
   return (
     <div>
-      hello
+      welcom to admin dashboard
      
     </div>
   )

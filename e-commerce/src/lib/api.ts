@@ -113,3 +113,13 @@ export const DeleteOneOrder = (id:number) =>
       },
     });
 
+
+  // filter api
+
+  export const FilterProduct = (data:any) =>
+    api.get(`/product-filters?${data}` , {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+

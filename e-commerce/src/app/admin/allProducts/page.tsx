@@ -51,10 +51,10 @@ const allProduct = () => {
   }
     
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto overflow-y-scroll h-[600px]">
     {productData.length !== 0 ? (
       <table className="w-full min-w-[600px] border border-gray-300">
-        <thead className="bg-gray-100">
+        <thead className="bg-gray-100 ">
           <tr>
             <th className="text-left p-3 border-b">Image</th>
             <th className="text-left p-3 border-b">Name</th>
