@@ -1,5 +1,6 @@
 "use client";
-import { AddProductCart, ProductInfo } from "@/lib/api";
+import { useCartContext } from "@/context/CartContext";
+import { AddProductCart, GetCartDetails, ProductInfo } from "@/lib/api";
 import { addtocart, allProductTypes } from "@/type";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ const productInfo = () => {
   const [productDataById, setProductDataById] =
     useState<allProductTypes | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const {setCartLength} = useCartContext()
 
   console.log(params.id);
 
@@ -30,11 +32,37 @@ const productInfo = () => {
     };
     fetchId();
   }, [params.id]);
+    // const getCartData = async () => {
+    //   try {
+    //     const res = await GetCartDetails();
+    //     setCartData(res.data.items);
+    //     setCartTotal(res.data?.total || 0);
+    //     setCartLength(res.data?.items?.length)
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+  
+    // useEffect(() => {
+    //   getCartData();
+    // }, []);
+  
+  //  useEffect(() => {
+  //     const cartLength = async () => {
+  //       const res = await GetCartDetails();
+  //       setCartLength(res.data?.items?.length);
+  //     };
+  //     cartLength();
+  //   }, []);
 
   const handleAddToCart = async () => {
     try {
       const res = await AddProductCart(CartData);
       alert("add to cart succssecfully");
+ 
+        const cartres = await GetCartDetails();
+        setCartLength(cartres.data?.items?.length);
+
     } catch (err) {
       console.log("somthng went wrong", err);
     }

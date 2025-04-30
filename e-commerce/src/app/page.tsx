@@ -45,21 +45,11 @@ const Home = () => {
   }, [filters]);
 
   return (
-    <div className="flex mx-auto py-8 px-4 gap-6">
-      <div className="w-[280px] bg-white rounded-lg shadow-md p-5 h-fit sticky top-24">
+    <div className="flex mx-auto py-8 px-4 gap-6 min-h-screen">
+      <div className="w-[280px] bg-white rounded-lg p-5 h-fit sticky top-24">
         <h1 className="text-2xl font-semibold mb-6">Filters</h1>
-
-        <input
-          type="text"
-          name="search"
-          placeholder="Search by name"
-          value={filters.search}
-          onChange={handleChange}
-          className="w-full mb-5 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-all"
-        />
-
         <div className="mb-5">
-          <label className="text-gray-700 font-medium mb-2 block">
+          <label className="text-gray-700 mb-2 block font-semibold">
             Category
           </label>
           <select
@@ -82,7 +72,7 @@ const Home = () => {
         </div>
 
         <div className="mb-5">
-          <label className="text-gray-700 font-medium mb-2 block">
+          <label className="text-gray-700  mb-2 block font-semibold">
             Price Range
           </label>
           <div className="flex gap-2">
@@ -106,7 +96,7 @@ const Home = () => {
         </div>
 
         <div className="mb-5">
-          <label className="text-gray-700 font-medium mb-2 block">
+          <label className="text-gray-700 mb-2 block font-semibold">
             Sort By
           </label>
           <select
@@ -122,7 +112,7 @@ const Home = () => {
         </div>
 
         <div className="mb-5">
-          <label className="text-gray-700 font-medium mb-2 block">Order</label>
+          <label className="text-gray-700  mb-2 block font-semibold">Order</label>
           <select
             name="order"
             value={filters.order}
@@ -143,7 +133,7 @@ const Home = () => {
               minPrice: "",
               maxPrice: "",
               category: "",
-              search: "",
+              search: filters.search,
             })
           }
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition-all"
@@ -153,6 +143,14 @@ const Home = () => {
       </div>
 
       <div className="flex-1">
+      <input
+          type="text"
+          name="search"
+          placeholder="Search by name"
+          value={filters.search}
+          onChange={handleChange}
+          className="w-[500px] mb-5 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-all"
+        />
         {productData.length === 0 ? (
           <p className="text-center text-xl font-semibold">
             No products found.
@@ -160,30 +158,30 @@ const Home = () => {
         ) : (
           <div className="flex flex-wrap justify-start gap-10 items-center">
             {productData.map((item) => (
-              <div
+              <Link href={`/product/${item.id}`}
                 key={item.id}
-                className="card w-[250px] max-lg:w-[200px] max-md:w-[140px] shadow-lg p-4 hover:scale-105 transition-all duration-200"
+                className="card w-[250px] overflow-hidden max-lg:w-[200px] max-md:w-[140px] shadow-lg p-4 hover:scale-105 transition-all duration-200"
               >
                 <div className="h-[220px] bg-gray-100 flex items-center justify-center overflow-hidden rounded">
                   <img
                     src={item.images[0]}
                     alt={item.name}
-                    className="h-full w-full object-contain"
+                    className="min-lg:h-full min-lg:w-full min-lg:object-contain"
                   />
                 </div>
                 <h2 className="mt-4 font-semibold text-gray-600 text-lg line-clamp-2">
                   {item.name}
                 </h2>
+            
                 <div className="flex justify-between items-center mt-2">
-                  <p className="text-lg font-bold">${item.price}</p>
+                  <p className="text-lg font-semibold">${item.price}</p>
                 </div>
-                <Link
-                  href={`/product/${item.id}`}
-                  className="mt-4 block text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-all"
+                <button
+                  className="w-full mt-4  text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-all"
                 >
                   View Details
-                </Link>
-              </div>
+                </button>
+              </Link>
             ))}
           </div>
         )}

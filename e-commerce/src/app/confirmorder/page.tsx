@@ -49,7 +49,7 @@ export default function ConfirmOrder() {
   }, []);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <div className="w-[90%] mx-auto py-8 max-w-6xl">
         {/* Page Title */}
         <h1 className="text-3xl font-bold text-center mb-10">Checkout</h1>

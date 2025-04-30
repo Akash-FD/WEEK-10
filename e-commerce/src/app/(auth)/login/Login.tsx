@@ -53,7 +53,7 @@ export default function Login() {
             type="email"
             name="email"
             placeholder="Enter your Email"
-            className="py-2 px-2 border"
+            className="py-2 px-2 border border-gray-400 rounded"
             value={formData.email}
             onChange={hanldeChangeEvent}
           />
@@ -61,7 +61,7 @@ export default function Login() {
             type="password"
             name="password"
             placeholder="Enter your password"
-            className="py-2 px-2 border"
+            className="py-2 px-2 border border-gray-400 rounded"
             value={formData.password}
             onChange={hanldeChangeEvent}
           />

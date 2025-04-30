@@ -1,5 +1,6 @@
 "use client";
 
+import { useCartContext } from "@/context/CartContext";
 import {
   GetCartDetails,
   RemoveCartProduct,
@@ -8,18 +9,23 @@ import {
 import { cartdataTypes } from "@/type";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { BiSolidMinusCircle } from "react-icons/bi";
+import { BsPlusCircleFill } from "react-icons/bs";
+import { HiMinusCircle } from "react-icons/hi";
 
 export default function cart() {
   const [cartData, setCartData] = useState<cartdataTypes[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
   //   const[updateQuntity, setUpdateQuantity]= useState<z>(0)
   console.log(cartData);
+  const { setCartLength } = useCartContext();
 
   const getCartData = async () => {
     try {
       const res = await GetCartDetails();
       setCartData(res.data.items);
       setCartTotal(res.data?.total || 0);
+      setCartLength(res.data?.items?.length);
     } catch (err) {
       console.log(err);
     }
@@ -42,7 +48,7 @@ export default function cart() {
   const deleteCartProduct = async (id: number) => {
     try {
       const res = await RemoveCartProduct(id);
-      alert("remove item");
+      // alert("remove item");
       getCartData();
     } catch (err) {
       console.error(err);
@@ -72,7 +78,7 @@ export default function cart() {
               {cartData.map((item) => (
                 <div
                   key={item.id}
-                  className="flex text-center items-center py-2 border-b max-sm:text-[8px]"
+                  className="flex text-center items-center py-3 border-b max-sm:text-[8px]"
                 >
                   <div className="flex-[1]">
                     <img
@@ -84,20 +90,22 @@ export default function cart() {
                   <div className="flex-[1]">{item.name}</div>
                   <div className="flex-[1]">{item.price}</div>
 
-                  <div className="flex-[1] max-sm:flex max-sm:flex-col">
-                    <button
-                      className="bg-gray-500 text-white px-1"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      +
-                    </button>
+                  <div className="flex-[1] items-center justify-center max-sm:flex max-sm:flex-col">
+                    <BiSolidMinusCircle
+                      className="inline text-[30px]"
+                      onClick={() => {
+                        if (item.quantity > 1) {
+                          updateQuantity(item.id, item.quantity - 1);
+                        } else {
+                          deleteCartProduct(item.id);
+                        }
+                      }}
+                    />
                     <span className="inline-block mx-3">{item.quantity}</span>
-                    <button
-                      className="bg-gray-500 text-white px-1"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    >
-                      -
-                    </button>
+                    <BsPlusCircleFill
+                      className="inline text-[25px]"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    />
                   </div>
                   <div className="flex-[1]"> {item.subtotal}</div>
                   <button

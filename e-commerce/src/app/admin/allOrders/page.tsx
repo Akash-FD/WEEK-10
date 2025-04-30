@@ -53,6 +53,10 @@ const allOrders = () => {
       const statusObj = {
         status: orderStatus,
       };
+      if (orderStatus=== "") {
+        alert("you are not updating the status")
+        
+      }
       const res = await EditOneOrder(orderId, statusObj);
       if (res.status === 200) {
         alert("product edited");
@@ -61,19 +65,20 @@ const allOrders = () => {
     } catch (err) {
       console.log("somthing went worng", err);
     }
+    setOrderStatus("")
   };
 
   return (
     <div className="">
-      <div className="flex items-center gap-10">
+      <div className="flex justify-center items-center gap-3">
         <select
           name=""
           id=""
-          className="w-full border my-5"
+          className="w-[200px] border py-1 my-2"
           value={orderStatus}
           onChange={(e) => setOrderStatus(e.target.value)}
         >
-          <option value="">none</option>
+          <option value="">update Status</option>
           <option value="PENDING">PENDING</option>
           <option value="PROCESSING">PROCESSING</option>
           <option value="SHIPPED">SHIPPED</option>
@@ -100,7 +105,7 @@ const allOrders = () => {
             <tbody>
               {orderData.map((order) =>
                 order.products.map((product) => (
-                  <tr key={order.order_id} className="hover:bg-gray-50">
+                  <tr key={`${order.order_id}_${product.product_id}`} className="hover:bg-gray-50">
                     <td className="p-3 border-b font-medium">
                       {order.order_id}
                     </td>
@@ -118,7 +123,7 @@ const allOrders = () => {
                     <td className="p-3 border-b">
                       <div className="flex gap-2">
                         <button
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded-md"
+                          className="bg-yellow-500 hover:bg-yellow-600 text-black text-sm px-3 py-1 rounded-md"
                           onClick={() =>
                             hanldeEdit(order.order_id , order.status)
                           }
@@ -126,7 +131,7 @@ const allOrders = () => {
                           Edit
                         </button>
                         <button
-                          className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md"
+                          className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-md"
                           onClick={() => hanldeDelete(order.order_id)}
                         >
                           Delete

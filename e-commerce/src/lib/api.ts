@@ -6,7 +6,7 @@ export const api = axios.create({
   baseURL: "http://localhost:8000/api",
 });
 
-// const token = 'Authorization: `Bearer ${localStorage.getItem("token")}`'
+// const token = localStorage.getItem("token")
 
 export const addProduct = (data: FormData) =>
   api.post("/products", data, {

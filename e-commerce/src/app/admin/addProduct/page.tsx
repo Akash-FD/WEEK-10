@@ -233,11 +233,11 @@ const ProductForm = () => {
     {formData.images.length > 0 && (
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {formData.images.map((img, index) => (
-          <div key={index} className="relative w-full h-32 border border-gray-300 rounded-lg overflow-hidden shadow-md">
+          <div key={index} className="relative w-[150px] h-32 border border-gray-300 rounded-lg overflow-hidden shadow-md">
             <img
               src={URL.createObjectURL(img)}
               alt={`preview-${index}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
             <button
               type="button"
