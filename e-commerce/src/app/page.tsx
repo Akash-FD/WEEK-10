@@ -34,7 +34,9 @@ const Home = () => {
         }
       });
       const res = await FilterProduct(queryParams.toString());
-      setProductData(res.data.products || res.data.data);
+      console.log(res.data);
+      
+      setProductData(res.data.data);
     } catch (err) {
       console.log("Something went wrong", err);
     }

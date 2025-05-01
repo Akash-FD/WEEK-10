@@ -38,7 +38,6 @@ const ProductForm = () => {
   }, [productId])
   
 
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -126,7 +125,6 @@ const ProductForm = () => {
 <div className="px-8 bg-white rounded-2xl shadow-lg">
   <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Add New Product</h2>
   <form onSubmit={handleSubmit} className="space-y-6">
-    
     <div>
       <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
         Product Name
@@ -137,7 +135,7 @@ const ProductForm = () => {
         name="name"
         value={formData.name}
         onChange={handleChange}
-        className="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-3 w-full bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Enter product name"
         required
       />

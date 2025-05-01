@@ -73,9 +73,8 @@ const Navbar = () => {
                
             <div className="flex items-center gap-2 cursor-pointer select-none" onClick={handleClick}>
               <FaUserCircle size={30} className="text-gray-600" />
-              <span className="text-gray-700 font-semibold hidden sm:inline">{user.name}</span>
+              <span className="text-gray-700 font-semibold hidden sm:inline">{user?.name}</span>
 
-        
               <div
                 className={`absolute right-0 top-14 w-64 bg-white rounded-lg shadow-lg p-4 space-y-4 transition-all duration-300 ${
                   openDropdown ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"

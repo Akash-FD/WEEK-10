@@ -9,7 +9,7 @@ export default function BlogLayout({
   return (
     <>
         <div className="flex">
-          <div className="flex shadow-2xl w-[250px] p-5 min-w-[200px] text-xl h-[735px]">
+          <div className="flex shadow-2xl bg-white w-[250px] p-5 min-w-[200px] text-xl h-[735px]">
             <AdminSidebar />
           </div>
           <div className="flex p-5 mx-auto">{children}</div>

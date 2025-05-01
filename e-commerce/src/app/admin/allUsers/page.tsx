@@ -8,6 +8,9 @@ import React, { useEffect, useState } from "react";
 
 const allUsers = () => {
   const [userData, setUserData] = useState<any[]>([]);
+  const [search, setSearch] = useState("");
+
+
   console.log(userData);
   
 //   const { setEditData, setProductId } = useEditProduct()
@@ -47,6 +50,7 @@ const allUsers = () => {
     
   return (
     <div className="w-full overflow-x-auto">
+      <input type="search" placeholder="enter user"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-full border border-gray-400 py-1 mb-3 px-2"/>
     {userData.length !== 0 ? (
       <table className="w-full min-w-[600px] border border-gray-300">
         <thead className="bg-gray-100">
@@ -59,7 +63,7 @@ const allUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {userData.map((item) => (
+          {userData.filter((value)=>search.toLowerCase()==="" ? value: value.name.toLowerCase().startsWith(search) || value.email.toLowerCase().startsWith(search)).map((item) => (
             <tr key={item.id} className="hover:bg-gray-50">
               <td className="p-3 border-b font-medium">{item.id}</td>
               <td className="p-3 border-b font-medium">{item.name}</td>

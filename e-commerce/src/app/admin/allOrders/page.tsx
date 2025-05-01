@@ -7,8 +7,11 @@ import React, { useEffect, useState } from "react";
 const allOrders = () => {
   const [orderData, setOrdersData] = useState<AllOrderData[]>([]);
   // const { setEditData, setProductId } = useEditProduct()
-  const [orderStatus, setOrderStatus] = useState("");
-  const [orderId, setOrderId] = useState(0)
+  // const [orderStatus, setOrderStatus] = useState("");
+  // const [orderId, setOrderId] = useState(0)
+  const [search, setSearch] = useState("");
+  const [editorder, setEditOrder] = useState<AllOrderData | null>(null);
+
   console.log(orderData);
 
   const router = useRouter();
@@ -17,14 +20,14 @@ const allOrders = () => {
   //
   const fetchAllProduct = async () => {
     try {
-        const res = await GetAllOrders();
-        setOrdersData(res.data);
-      } catch (err) {
-        console.log("somthing went worng", err);
-      }
-    };
-    
-    useEffect(() => {
+      const res = await GetAllOrders();
+      setOrdersData(res.data);
+    } catch (err) {
+      console.log("somthing went worng", err);
+    }
+  };
+
+  useEffect(() => {
     fetchAllProduct();
   }, []);
 
@@ -43,50 +46,37 @@ const allOrders = () => {
     }
   };
 
-  const hanldeEdit = async (id: number, status: string) => {
-    setOrderStatus(status);
-    setOrderId(id)
-  };
+  // const hanldeEdit = async (id: number, status: string) => {
+  //   setOrderStatus(status);
+  //   setOrderId(id)
+  // };
 
-  const updateStatus = async () => {
+  const updateStatus = async (id:number) => {
     try {
       const statusObj = {
-        status: orderStatus,
+        status: editorder?.status || "PENDING"
       };
-      if (orderStatus=== "") {
+      
+      if (editorder?.status=== "") {
         alert("you are not updating the status")
-        
+        return;
       }
-      const res = await EditOneOrder(orderId, statusObj);
+      const res = await EditOneOrder(id, statusObj);
       if (res.status === 200) {
         alert("product edited");
         fetchAllProduct()
       }
     } catch (err) {
       console.log("somthing went worng", err);
+    } finally{
+      setEditOrder(null)
     }
-    setOrderStatus("")
-  };
+  
+  }
 
   return (
     <div className="">
-      <div className="flex justify-center items-center gap-3">
-        <select
-          name=""
-          id=""
-          className="w-[200px] border py-1 my-2"
-          value={orderStatus}
-          onChange={(e) => setOrderStatus(e.target.value)}
-        >
-          <option value="">update Status</option>
-          <option value="PENDING">PENDING</option>
-          <option value="PROCESSING">PROCESSING</option>
-          <option value="SHIPPED">SHIPPED</option>
-          <option value="DELIVERED">DELIVERED</option>
-          <option value="CANCELLED">CANCELLED</option>
-        </select>
-        <button onClick={updateStatus} className="bg-yellow-500 px-3 py-1 rounded-lg">Save</button>
-      </div>
+       <input type="search" placeholder="Search product or category"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-[95%] border bg-white sticky py-1 mb-3 px-2 focus:border-blue-500"/>
 
       <div className="w-full overflow-x-auto">
         {orderData.length !== 0 ? (
@@ -103,9 +93,12 @@ const allOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {orderData.map((order) =>
+              {orderData.filter((value)=>search.toLowerCase() === "" ? value : value.order_id.toString().startsWith(search) || value.status.toLowerCase().startsWith(search)).map((order) =>
                 order.products.map((product) => (
-                  <tr key={`${order.order_id}_${product.product_id}`} className="hover:bg-gray-50">
+                  <tr
+                    key={`${order.order_id}_${product.product_id}`}
+                    className="hover:bg-gray-50"
+                  >
                     <td className="p-3 border-b font-medium">
                       {order.order_id}
                     </td>
@@ -119,17 +112,44 @@ const allOrders = () => {
                     <td className="p-3 border-b font-medium">
                       {product.quantity}
                     </td>
-                    <td className="p-3 border-b font-medium">{order.status}</td>
+                    {editorder?.order_id === order.order_id ? (
+                      <td>
+                        <select
+                          name=""
+                          id=""
+                          className="w-[120px] border py-1 my-2"
+                          value={editorder.status}
+                          onChange={(e) => setEditOrder({...editorder, status:(e.target.value)})}
+                        >
+                          {/* <option value="">update Status</option> */}
+                          <option value="PENDING">PENDING</option>
+                          <option value="PROCESSING">PROCESSING</option>
+                          <option value="SHIPPED">SHIPPED</option>
+                          <option value="DELIVERED">DELIVERED</option>
+                          <option value="CANCELLED">CANCELLED</option>
+                        </select>
+                      </td>
+                    ) : (
+                      <td className="p-3 border-b font-medium">
+                        {order.status}
+                      </td>
+                    )}
+
                     <td className="p-3 border-b">
                       <div className="flex gap-2">
+                       {editorder?.order_id === order.order_id ?<button
+                          className="bg-yellow-500 hover:bg-yellow-600 text-black text-sm px-3 py-1 rounded-md"
+                          onClick={() => updateStatus(editorder.order_id)}
+                        >
+                          Update
+                        </button>
+                        :
                         <button
                           className="bg-yellow-500 hover:bg-yellow-600 text-black text-sm px-3 py-1 rounded-md"
-                          onClick={() =>
-                            hanldeEdit(order.order_id , order.status)
-                          }
+                          onClick={() => setEditOrder(order)}
                         >
                           Edit
-                        </button>
+                        </button>}
                         <button
                           className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-md"
                           onClick={() => hanldeDelete(order.order_id)}
