@@ -5,6 +5,7 @@ import { LoginTypes, User } from "@/type";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
 
@@ -29,16 +30,56 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
        const userRes = await getUser()
        console.log(userRes.data.role);
-      alert(res.data?.message);
       if (userRes.data.role === "ADMIN"){
-        router.push("/admin")
+        toast.success("Login successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+
+          setTimeout(() => {
+          
+          router.push("/admin");
+        }, 2000);
       }
       else{
-        router.push("/")
+        toast.success("Login successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+
+          setTimeout(() => {
+          
+          router.push("/");
+        }, 2000);
+      
       } 
      
     } catch (err) {
-      alert("Login failed");
+      toast.error("Login Faild", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
       console.log(err);
     }
   
@@ -69,13 +110,17 @@ export default function Login() {
             Submit
           </button>
         </form>
-        <div className="text-center my-2">
-          <span>if you are not Register? </span>
+        <div className="text-center flex justify-between my-2">
+          <Link href="/verifyemail" className="text-blue-500">
+            forgot password ?
+          </Link>
           <Link href="/register" className="text-blue-500">
             register
           </Link>
         </div>
+      
       </div>
+      <ToastContainer/>
     </div>
   );
 }

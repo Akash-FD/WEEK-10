@@ -77,3 +77,6 @@ export interface Status{
     status :string
 }
 
+export interface emailObjType {
+    email : string, 
+  }

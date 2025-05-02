@@ -18,5 +18,11 @@ export default function ConditionalNavbar() {
   if (pathname.startsWith("/register")) {
     return null;
   }
+  if (pathname.startsWith("/verifyemail")) {
+    return null;
+  }
+  if (pathname.startsWith("/reset-password")) {
+    return null;
+  }
   return <Navbar />;
 }

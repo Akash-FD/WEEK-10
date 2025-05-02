@@ -1,5 +1,5 @@
 "use client";
-import { LoginTypes, RegisterTypes, User } from "@/type";
+import { emailObjType, LoginTypes, RegisterTypes, User } from "@/type";
 import { api } from "./api";
 
 export const RegisterUser = (data: RegisterTypes) =>
@@ -30,3 +30,11 @@ export const getUser = () =>
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
+
+  // forget password api
+
+  export const EmailVerify = (email:emailObjType) =>
+    api.post("/auth/forgot-password", email);
+ 
+

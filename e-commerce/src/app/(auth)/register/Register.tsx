@@ -6,6 +6,7 @@ import { useState } from "react";
 import { RegisterUser } from "@/lib/auth";
 import { RegisterTypes } from "@/type";
 import { useRouter } from "next/navigation";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterTypes>({
@@ -57,13 +58,36 @@ export default function Register() {
 
 
     try {
-      await RegisterUser(formData);
-      alert("Registration successful");
-      router.push("/login");
+     const res = await RegisterUser(formData);
+      toast.success("Registration successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+        setTimeout(() => {
+          
+          router.push("/login");
+        }, 2000);
     }
   
      catch (err) {
-      alert("Registration failed");
+      toast.error("Registration successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
       console.log(err);
     }
   };
@@ -143,6 +167,7 @@ export default function Register() {
           </Link>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

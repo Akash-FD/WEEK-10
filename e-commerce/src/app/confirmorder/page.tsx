@@ -105,14 +105,16 @@ export default function ConfirmOrder() {
             <div>
               <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
               <div className="flex flex-col gap-4">
-                <div>
+                <input type="text" placeholder="Enter your city" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                <input type="text" placeholder="Enter your pincode" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                
                   <textarea
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="123 Main St, City, State, Country, Zip Code"
+                    placeholder="C block, landmark, area"
                     className="w-full border p-4 rounded-lg min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
                   ></textarea>
-                </div>
+    
               </div>
 
               {/* Cart Total Section */}

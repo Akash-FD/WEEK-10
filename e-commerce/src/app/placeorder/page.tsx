@@ -1,10 +1,18 @@
+"use client"
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const placeorder = () => {
+
+  const router = useRouter()
+
+  setTimeout(() => {
+    router.push("/")
+    
+  }, 3000);
     return (
  
-
         <div className="flex items-center justify-center min-h-screen bg-green-100 p-6">
         <div className="bg-white p-10 rounded-2xl shadow-2xl text-center space-y-6 max-w-md">
           <div className="flex justify-center">
