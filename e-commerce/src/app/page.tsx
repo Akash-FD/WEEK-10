@@ -1,12 +1,15 @@
 "use client";
 
 import { FilterProduct } from "@/lib/api";
+import { filterTypes, productDataTypes } from "@/type";
+import Image from "next/image";
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
-  const [productData, setProductData] = useState<any[]>([]);
-  const [filters, setFilters] = useState({
+  const [productData, setProductData] = useState<productDataTypes[]>([]);
+  const [filters, setFilters] = useState<filterTypes>({
     sortBy: "",
     order: "",
     minPrice: "",
@@ -34,7 +37,7 @@ const Home = () => {
         }
       });
       const res = await FilterProduct(queryParams.toString());
-      console.log(res.data);
+
       
       setProductData(res.data.data);
     } catch (err) {
@@ -165,9 +168,11 @@ const Home = () => {
                 className="card w-[250px] overflow-hidden max-lg:w-[200px] max-md:w-[140px] shadow-lg p-4 hover:scale-105 transition-all duration-200"
               >
                 <div className="h-[220px] bg-gray-100 flex items-center justify-center overflow-hidden rounded">
-                  <img
-                    src={item.images[0]}
+                  <Image src={item.images[0]}
                     alt={item.name}
+                    width={200}
+                    height={200}
+                    quality={100}
                     className="min-lg:h-full min-lg:w-full min-lg:object-contain"
                   />
                 </div>

@@ -1,23 +1,15 @@
 "use client";
 import { DeleteOneOrder, EditOneOrder, GetAllOrders } from "@/lib/api";
-import { AllOrderData, Status } from "@/type";
-import { useRouter } from "next/navigation";
+import { AllOrderData } from "@/type";
 import React, { useEffect, useState } from "react";
 
-const allOrders = () => {
+const AllOrders = () => {
   const [orderData, setOrdersData] = useState<AllOrderData[]>([]);
-  // const { setEditData, setProductId } = useEditProduct()
-  // const [orderStatus, setOrderStatus] = useState("");
-  // const [orderId, setOrderId] = useState(0)
   const [search, setSearch] = useState("");
   const [editorder, setEditOrder] = useState<AllOrderData | null>(null);
 
-  console.log(orderData);
 
-  const router = useRouter();
-  console.log(orderData);
 
-  //
   const fetchAllProduct = async () => {
     try {
       const res = await GetAllOrders();
@@ -25,14 +17,14 @@ const allOrders = () => {
     } catch (err) {
       console.log("somthing went worng", err);
     }
-  };
+  }
 
   useEffect(() => {
     fetchAllProduct();
   }, []);
 
   const hanldeDelete = async (id: number) => {
-    console.log(id);
+    
 
     try {
       const res = await DeleteOneOrder(id);
@@ -67,7 +59,9 @@ const allOrders = () => {
         fetchAllProduct()
       }
     } catch (err) {
-      console.log("somthing went worng", err);
+      console.log(err);
+      
+  
     } finally{
       setEditOrder(null)
     }
@@ -173,4 +167,4 @@ const allOrders = () => {
   );
 };
 
-export default allOrders;
+export default AllOrders;

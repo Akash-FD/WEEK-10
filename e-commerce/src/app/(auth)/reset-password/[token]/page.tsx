@@ -1,19 +1,16 @@
 "use client"
 
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useParams,useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function ResetPassword() {
   const router = useRouter();
+  const {token} = useParams()
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
+ 
+  
 
-  useEffect(() => {
-    const queryToken = router.query.token as string;
-    if (queryToken) {
-      setToken(queryToken);
-    }
-  }, [router.query]);
+ 
 
   const handleSubmit = async () => {
     const res = await fetch('http://localhost:8000/reset-password', {

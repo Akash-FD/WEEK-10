@@ -1,28 +1,17 @@
 "use client";
 
-import { useEditProduct } from "@/context/ProductContext";
-import { DeleteProduct, DeleteUser, GetAllProduct, GetAllUsers } from "@/lib/api";
-import { allProductTypes } from "@/type";
-import { useRouter } from "next/navigation";
+import {  DeleteUser, GetAllUsers } from "@/lib/api";
+import { User } from "@/type";
 import React, { useEffect, useState } from "react";
 
-const allUsers = () => {
-  const [userData, setUserData] = useState<any[]>([]);
+const AllUsers = () => {
+  const [userData, setUserData] = useState<User[]>([]);
   const [search, setSearch] = useState("");
 
-
-  console.log(userData);
-  
-//   const { setEditData, setProductId } = useEditProduct()
-  const router = useRouter()
-
-// 
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
         const res = await GetAllUsers();
-        console.log(res.data);
-        
         setUserData(res.data)
       } catch (err) {
         console.log("somthing went worng", err);
@@ -32,8 +21,7 @@ const allUsers = () => {
   }, []);
 
   const hanldeDelete = async (id: number) => {
-    console.log(id);
-
+    
     try {
       const res = await DeleteUser(id);
       
@@ -69,7 +57,7 @@ const allUsers = () => {
               <td className="p-3 border-b font-medium">{item.name}</td>
               <td className="p-3 border-b font-medium">{item.email}</td>
               {item.role === "Buyer" ? <td className="p-3 border-b font-medium">Buyer</td> : <td className="p-3 border-b font-bold">Admin</td>}
-              {/* <td className="p-3 border-b font-medium">{item.role}</td> */}
+
               <td className="p-3 border-b">
                 <div className="flex gap-2">
                  
@@ -94,4 +82,4 @@ const allUsers = () => {
   );
 };
 
-export default allUsers;
+export default AllUsers;

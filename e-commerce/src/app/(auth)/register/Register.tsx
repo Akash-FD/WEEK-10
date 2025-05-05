@@ -18,7 +18,7 @@ export default function Register() {
 
   const [confirmpassword, setConfirmpassword] = useState("");
   const [error, setError] = useState("");
-  console.log(formData);
+
   const router = useRouter()
 
   const handleChange = (
@@ -58,7 +58,7 @@ export default function Register() {
 
 
     try {
-     const res = await RegisterUser(formData);
+     await RegisterUser(formData);
       toast.success("Registration successfully", {
         position: "top-right",
         autoClose: 2000,
@@ -77,7 +77,9 @@ export default function Register() {
     }
   
      catch (err) {
-      toast.error("Registration successfully", {
+      console.log(err);
+      
+      toast.error("Registration Faild", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -88,7 +90,7 @@ export default function Register() {
         theme: "light",
         transition: Bounce,
         });
-      console.log(err);
+   
     }
   };
 

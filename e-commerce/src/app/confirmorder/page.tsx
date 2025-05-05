@@ -2,6 +2,7 @@
 
 import { GetCartDetails, PlaceOrder } from "@/lib/api";
 import { cartdataTypes, orderDataObj, orderDataTypes } from "@/type";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -16,7 +17,7 @@ export default function ConfirmOrder() {
     products: orderData,
     address: address,
   };
-  console.log(orderDataObj);
+
 
   const getCartData = async () => {
     try {
@@ -36,7 +37,7 @@ export default function ConfirmOrder() {
 
   const PostOrderData = async () => {
     try {
-      const res = await PlaceOrder(orderDataObj);
+      await PlaceOrder(orderDataObj);
       alert("order placed");
       router.push("/placeorder");
     } catch (err) {
@@ -51,11 +52,11 @@ export default function ConfirmOrder() {
   return (
     <div className="min-h-screen">
       <div className="w-[90%] mx-auto py-8 max-w-6xl">
-        {/* Page Title */}
+       
         <h1 className="text-3xl font-bold text-center mb-10">Checkout</h1>
 
         <div className="flex flex-col md:flex-row gap-10">
-          {/* Left Side - Cart Items */}
+    
           <div className="flex-1 bg-white p-6 rounded-2xl shadow-md">
             <h2 className="text-xl font-bold mb-4">Your Cart</h2>
 
@@ -81,9 +82,12 @@ export default function ConfirmOrder() {
                     cartData.map((item) => (
                       <tr key={item.id} className="border-b">
                         <td className="py-3">
-                          <img
+                          <Image
                             src={item.image}
                             alt={item.name}
+                            width={100}
+                            height={100}
+                            quality={100}
                             className="w-16 h-16 object-contain mx-auto"
                           />
                         </td>
@@ -99,9 +103,9 @@ export default function ConfirmOrder() {
             </div>
           </div>
 
-          {/* Right Side - Address & Total */}
+         
           <div className="flex-1 bg-white p-6 rounded-2xl shadow-md flex flex-col gap-6">
-            {/* Address Form */}
+           
             <div>
               <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
               <div className="flex flex-col gap-4">
@@ -117,7 +121,7 @@ export default function ConfirmOrder() {
     
               </div>
 
-              {/* Cart Total Section */}
+          
               <div className="bg-gray-100 p-4 rounded-xl mt-6">
                 <h3 className="text-lg font-bold mb-4">Order Summary</h3>
                 <div className="flex justify-between mb-2">
@@ -133,7 +137,6 @@ export default function ConfirmOrder() {
                   <span>${cartTotal}</span>
                 </div>
 
-                {/* Confirm Order Button */}
                 <button
                   onClick={() => PostOrderData()}
                   disabled={address.trim().length === 0}

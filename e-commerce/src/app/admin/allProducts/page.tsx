@@ -3,19 +3,19 @@
 import { useEditProduct } from "@/context/ProductContext";
 import { DeleteProduct, GetAllProduct } from "@/lib/api";
 import { allProductTypes } from "@/type";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 
-const allProduct = () => {
-  const [productData, setProductData] = useState<any[]>([]);
+const AllProduct = () => {
+  const [productData, setProductData] = useState<allProductTypes[]>([]);
   const [search, setSearch] = useState("");
   const { setEditData, setProductId } = useEditProduct()
   const router = useRouter()
-  console.log(productData)
 
-// 
+
   useEffect(() => {
     const fetchAllProduct = async () => {
       try {
@@ -29,13 +29,13 @@ const allProduct = () => {
   }, []);
 
   const hanldeDelete = async (id: number) => {
-    console.log(id);
+   
 
     try {
       const res = await DeleteProduct(id);
       // const getall = productData.filter((item)=>item.id !== id)
       // setProductData(getall)
-      console.log(res.status)
+    
       if (res.status === 200) {
         alert("product deleted");
         const getall = await GetAllProduct();
@@ -74,7 +74,7 @@ const allProduct = () => {
           {productData.filter((value)=>search.toLowerCase() === "" ? value: value.name.toLowerCase().startsWith(search) || value.category.toLowerCase().startsWith(search)).map((item) => (
             <tr key={item.id} className="hover:bg-gray-50 bg-white">
               <td className="p-3 border-b">
-                <img src={item.images[0]} alt={item.name} className="w-16 h-16 object-contain" />
+                <Image src={item.images[0]} alt={item.name} width={200} height={200} quality={100} className="w-16 h-16 object-contain" />
               </td>
               <td className="p-3 border-b font-medium">{item.name}</td>
               <td className="p-3 border-b font-medium">{item.description}</td>
@@ -83,19 +83,9 @@ const allProduct = () => {
               <td className="p-3 border-b text-green-600 font-semibold">${item.price}</td>
               <td className="p-3 border-b">
                 <div className="flex items-center gap-5">
-                  {/* <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded-md"
-                    onClick={() => handleEdit(item)}
-                  >
-                    Edit
-                  </button> */}
+              
                   <MdEditSquare  onClick={() => handleEdit(item)} className="text-gray-600 hover:text-gray-700 text-2xl"/>
-                  {/* <button
-                    className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md"
-                    onClick={() => hanldeDelete(item.id)}
-                  >
-                    Delete
-                  </button> */}
+                 
                   <FaTrash onClick={() => hanldeDelete(item.id)} className="text-red-700 text-2xl hover:text-red-800"/>
 
                 </div>
@@ -114,4 +104,4 @@ const allProduct = () => {
   );
 };
 
-export default allProduct;
+export default AllProduct;

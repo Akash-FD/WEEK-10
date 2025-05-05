@@ -2,8 +2,7 @@ import { addtocart, orderDataObj, Status } from "@/type";
 import axios from "axios";
 
 export const api = axios.create({
-  // baseURL: " https://276c-125-20-216-178.ngrok-free.app/api",
-  baseURL: "http://localhost:8000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL
 });
 
 // const token = localStorage.getItem("token")
@@ -116,7 +115,7 @@ export const DeleteOneOrder = (id:number) =>
 
   // filter api
 
-  export const FilterProduct = (data:any) =>
+  export const FilterProduct = (data:string) =>
     api.get(`/product-filters?${data}` , {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

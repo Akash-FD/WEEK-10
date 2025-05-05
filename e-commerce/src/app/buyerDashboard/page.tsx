@@ -3,15 +3,9 @@ import { GetAllOrders } from "@/lib/api";
 import { AllOrderData } from "@/type";
 import React, { useEffect, useState } from "react";
 
-const buyerDashboard = () => {
+const BuyerDashboard = () => {
   const [orderData, setOrdersData] = useState<AllOrderData[]>([]);
-  // const { setEditData, setProductId } = useEditProduct()
-  console.log(orderData);
 
- 
-  console.log(orderData);
-
-  //
   const fetchAllProduct = async () => {
     try {
         const res = await GetAllOrders();
@@ -24,8 +18,6 @@ const buyerDashboard = () => {
     useEffect(() => {
     fetchAllProduct();
   }, []);
-
-
 
   return (
     <div className="overflow-x-auto min-h-screen">
@@ -62,4 +54,4 @@ const buyerDashboard = () => {
   );
 };
 
-export default buyerDashboard;
+export default BuyerDashboard;

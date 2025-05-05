@@ -79,4 +79,20 @@ export interface Status{
 
 export interface emailObjType {
     email : string, 
-  }
+ }
+
+export interface filterTypes {
+    sortBy: string,
+    order: string,
+    minPrice: string,
+    maxPrice: string,
+    category: string,
+    search: string,
+}
+
+export interface productDataTypes{
+    id:string,
+    name:string,
+    price:number,
+    images:string[]
+}

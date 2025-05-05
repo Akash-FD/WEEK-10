@@ -1,7 +1,7 @@
 "use client";
 
 import { getUser, LoginUser } from "@/lib/auth";
-import { LoginTypes, User } from "@/type";
+import { LoginTypes } from "@/type";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -29,11 +29,11 @@ export default function Login() {
       const res = await LoginUser(formData);
       localStorage.setItem("token", res.data.token);
        const userRes = await getUser()
-       console.log(userRes.data.role);
-      if (userRes.data.role === "ADMIN"){
+    
+      if (userRes?.data.role === "ADMIN"){
         toast.success("Login successfully", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
@@ -46,12 +46,12 @@ export default function Login() {
           setTimeout(() => {
           
           router.push("/admin");
-        }, 2000);
+        }, 1000);
       }
       else{
         toast.success("Login successfully", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
@@ -64,11 +64,12 @@ export default function Login() {
           setTimeout(() => {
           
           router.push("/");
-        }, 2000);
+        }, 1000);
       
       } 
      
     } catch (err) {
+      console.log(err); 
       toast.error("Login Faild", {
         position: "top-right",
         autoClose: 2000,
@@ -80,7 +81,7 @@ export default function Login() {
         theme: "light",
         transition: Bounce,
         });
-      console.log(err);
+    
     }
   
   };

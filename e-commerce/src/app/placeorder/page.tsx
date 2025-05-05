@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-const placeorder = () => {
+const Placeorder = () => {
 
   const router = useRouter()
 
@@ -47,4 +47,4 @@ const placeorder = () => {
     )
 }
 
-export default placeorder
+export default Placeorder

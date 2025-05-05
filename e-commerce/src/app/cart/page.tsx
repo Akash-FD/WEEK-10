@@ -7,17 +7,16 @@ import {
   UpdateCartDetails,
 } from "@/lib/api";
 import { cartdataTypes } from "@/type";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BiSolidMinusCircle } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { HiMinusCircle } from "react-icons/hi";
 
-export default function cart() {
+
+export default function Cart() {
   const [cartData, setCartData] = useState<cartdataTypes[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
-  //   const[updateQuntity, setUpdateQuantity]= useState<z>(0)
-  console.log(cartData);
   const { setCartLength } = useCartContext();
 
   const getCartData = async () => {
@@ -36,9 +35,9 @@ export default function cart() {
   }, []);
 
   const updateQuantity = async (id: number, quantity: number) => {
-    console.log(quantity);
+
     try {
-      const res = await UpdateCartDetails(id, quantity);
+      await UpdateCartDetails(id, quantity);
       getCartData();
     } catch (err) {
       console.error(err);
@@ -47,8 +46,7 @@ export default function cart() {
 
   const deleteCartProduct = async (id: number) => {
     try {
-      const res = await RemoveCartProduct(id);
-      // alert("remove item");
+       await RemoveCartProduct(id);
       getCartData();
     } catch (err) {
       console.error(err);
@@ -81,9 +79,12 @@ export default function cart() {
                   className="flex text-center items-center py-3 border-b max-sm:text-[8px]"
                 >
                   <div className="flex-[1]">
-                    <img
+                    <Image
                       src={item.image}
-                      alt=""
+                      alt={item.name}
+                      width={200}
+                      height={100}
+                      quality={100}
                       className="w-[40px] object-contain m-auto"
                     />
                   </div>

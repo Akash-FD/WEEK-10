@@ -2,17 +2,17 @@
 import { useCartContext } from "@/context/CartContext";
 import { AddProductCart, GetCartDetails, ProductInfo } from "@/lib/api";
 import { addtocart, allProductTypes } from "@/type";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
-const productInfo = () => {
+const ProductInfoPage = () => {
   const params = useParams();
-  const [productDataById, setProductDataById] =
-    useState<allProductTypes | null>(null);
+  const [productDataById, setProductDataById] = useState<allProductTypes | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const {setCartLength} = useCartContext()
 
-  console.log(params.id);
 
   const CartData: addtocart = {
     productId: Number(params.id),
@@ -22,7 +22,7 @@ const productInfo = () => {
     const fetchId = async () => {
       try {
         const res = await ProductInfo(Number(params.id));
-        console.log(res.data.data);
+       
         if (res.status === 200) {
           setProductDataById(res.data.data);
         }
@@ -32,33 +32,22 @@ const productInfo = () => {
     };
     fetchId();
   }, [params.id]);
-    // const getCartData = async () => {
-    //   try {
-    //     const res = await GetCartDetails();
-    //     setCartData(res.data.items);
-    //     setCartTotal(res.data?.total || 0);
-    //     setCartLength(res.data?.items?.length)
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-  
-    // useEffect(() => {
-    //   getCartData();
-    // }, []);
-  
-  //  useEffect(() => {
-  //     const cartLength = async () => {
-  //       const res = await GetCartDetails();
-  //       setCartLength(res.data?.items?.length);
-  //     };
-  //     cartLength();
-  //   }, []);
+ 
 
   const handleAddToCart = async () => {
     try {
-      const res = await AddProductCart(CartData);
-      alert("add to cart succssecfully");
+      await AddProductCart(CartData);
+      toast.success("Add to Cart successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
  
         const cartres = await GetCartDetails();
         setCartLength(cartres.data?.items?.length);
@@ -74,29 +63,41 @@ const productInfo = () => {
           <div className="flex flex-wrap gap-5 justify-center">
             <div className="flex gap-8 ">
               <div className="display">
-                <img
-                  src={productDataById?.images[0]}
-                  alt=""
+                <Image
+                  src={productDataById?.images[0] || "/placeholder-image.png"}
+                  alt={productDataById?.name || ""}
+                  width={100}
+                  height={100}
+                  quality={100}
                   className="w-[80px] mb-3"
                 />
-                <img
-                  src={productDataById?.images[0]}
-                  alt=""
+                 <Image
+                  src={productDataById?.images[0] || "/placeholder-image.png"}
+                  alt={productDataById?.name || ""}
+                  width={100}
+                  height={100}
+                  quality={100}
                   className="w-[80px] mb-3"
                 />
-                <img
-                  src={productDataById?.images[0]}
-                  alt=""
+                 <Image
+                  src={productDataById?.images[0] || "/placeholder-image.png"}
+                  alt={productDataById?.name || ""}
+                  width={100}
+                  height={100}
+                  quality={100}
                   className="w-[80px] mb-3"
                 />
-                <img
-                  src={productDataById?.images[0]}
-                  alt=""
+                 <Image
+                  src={productDataById?.images[0] || "/placeholder-image.png"}
+                  alt={productDataById?.name || ""}
+                  width={100}
+                  height={100}
+                  quality={100}
                   className="w-[80px] mb-3"
                 />
               </div>
               <div className="w-[350px]">
-                <img src={productDataById?.images[0]} alt="" className="object-contain" />
+                <Image src={productDataById?.images[0] || "/placeholder-image.png"} alt={productDataById?.name || ""} width={300} height={300} quality={100} className="w-full h-full object-contain" />
               </div>
             </div>
           
@@ -140,9 +141,10 @@ const productInfo = () => {
          
           </div>
         </div>
+        <ToastContainer/>
       </div>
     
   );
 };
 
-export default productInfo;
+export default ProductInfoPage;

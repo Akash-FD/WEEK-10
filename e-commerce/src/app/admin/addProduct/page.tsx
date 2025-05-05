@@ -4,11 +4,13 @@ import { addProduct, EditProduct } from "@/lib/api";
 import { adminForm } from "@/type";
 import { useEditProduct } from "@/context/ProductContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 
 
 const ProductForm = () => {
 
-  const {editData, setEditData, productId, setProductId} =useEditProduct()
+  const {editData, productId, setProductId} =useEditProduct()
 
   const router = useRouter()
 
@@ -89,15 +91,15 @@ const ProductForm = () => {
     try
      {
       if(productId){
-        const response = await EditProduct(formDataObj, productId);
-        console.log("Product added:", response.data);
+        await EditProduct(formDataObj, productId);
+      
         alert("Product added successfully!");
         router.push("/admin/allProducts")
       
       }else{
 
-        const response = await addProduct(formDataObj);
-        console.log("Product added:", response.data);
+         await addProduct(formDataObj);
+        
         alert("Product added successfully!");
         router.push("/admin/allProducts")
       }
@@ -232,9 +234,10 @@ const ProductForm = () => {
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {formData.images.map((img, index) => (
           <div key={index} className="relative w-[150px] h-32 border border-gray-300 rounded-lg overflow-hidden shadow-md">
-            <img
+            <Image
               src={URL.createObjectURL(img)}
               alt={`preview-${index}`}
+              fill
               className="w-full h-full object-contain"
             />
             <button
