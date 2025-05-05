@@ -1,5 +1,5 @@
 "use client";
-import { emailObjType, LoginTypes, RegisterTypes } from "@/type";
+import { emailObjType, LoginTypes, RegisterTypes, ResetPasswordTpyes } from "@/type";
 import { api } from "./api";
 
 export const RegisterUser = (data: RegisterTypes) =>
@@ -22,3 +22,9 @@ export const getUser = () =>
     api.post("/auth/forgot-password", email);
  
 
+  export const ResetPassword = (dataObj:any) =>
+    api.post("/auth/forgot-password", dataObj,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });

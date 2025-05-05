@@ -96,3 +96,9 @@ export interface productDataTypes{
     price:number,
     images:string[]
 }
+
+export interface ResetPasswordTpyes{
+    password:string,
+    confirmpassword:string
+}
+
