@@ -156,13 +156,13 @@ const Home = () => {
           onChange={handleChange}
           className="w-[500px] mb-5 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-all"
         />
-        {productData.length === 0 ? (
+        {productData?.length === 0 ? (
           <p className="text-center text-xl font-semibold">
             No products found.
           </p>
         ) : (
           <div className="flex flex-wrap justify-start gap-10 items-center">
-            {productData.map((item) => (
+            {productData?.map((item) => (
               <Link href={`/product/${item.id}`}
                 key={item.id}
                 className="card w-[250px] overflow-hidden max-lg:w-[200px] max-md:w-[140px] shadow-lg p-4 hover:scale-105 transition-all duration-200"

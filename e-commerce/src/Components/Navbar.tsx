@@ -18,16 +18,28 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await getUser();
-      setUser(res.data);
-    };
+    try{
+
+        const res = await getUser();
+        setUser(res.data);
+      }catch(err){
+        console.log(err);
+        
+      }
+      };
     fetchUser();
   }, []);
 
   useEffect(() => {
     const cartLength = async () => {
-      const res = await GetCartDetails();
-      setCartLength(res.data.items.length);
+      try{
+
+        const res = await GetCartDetails();
+        setCartLength(res.data.items.length);
+      }catch(err){
+        console.log(err);
+        
+      }
     };
     cartLength();
   }, [setCartLength]);
