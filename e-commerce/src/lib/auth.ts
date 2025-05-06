@@ -22,8 +22,8 @@ export const getUser = () =>
     api.post("/auth/forgot-password", email);
  
 
-  export const ResetPassword = (dataObj:any) =>
-    api.post("/auth/forgot-password", dataObj,{
+  export const resetPassword = (dataObj:ResetPasswordTpyes) =>
+    api.post("/auth/reset-password", dataObj,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },

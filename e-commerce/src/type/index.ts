@@ -98,7 +98,7 @@ export interface productDataTypes{
 }
 
 export interface ResetPasswordTpyes{
-    password:string,
-    confirmpassword:string
+    newPassword:string,
+    confirmPassword:string
 }
 

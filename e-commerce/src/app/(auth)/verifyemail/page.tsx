@@ -31,7 +31,7 @@ export default function VerifyEmail() {
         <h2 className="text-3xl py-5 text-blue-500 text-center">
           Verify Your Email
         </h2>
-        <form action="" className="flex flex-col gap-6">
+        <form action="" onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="email"
             placeholder="Enter your email"
@@ -42,7 +42,7 @@ export default function VerifyEmail() {
           <button
             type="submit"
             className="bg-blue-600 text-white px-5 py-2 my-2 rounded-lg w-full m-auto hover:bg-blue-800"
-            onClick={handleSubmit}
+            
           >
             Next
           </button>
