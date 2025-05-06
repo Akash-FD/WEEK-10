@@ -29,8 +29,7 @@ const AllProduct = () => {
   }, []);
 
   const hanldeDelete = async (id: number) => {
-   
-
+  
     try {
       const res = await DeleteProduct(id);
       // const getall = productData.filter((item)=>item.id !== id)
@@ -71,10 +70,10 @@ const AllProduct = () => {
           </tr>
         </thead>
         <tbody>
-          {productData.filter((value)=>search.toLowerCase() === "" ? value: value.name.toLowerCase().startsWith(search) || value.category.toLowerCase().startsWith(search)).map((item) => (
+          {productData.filter((value)=>search.toLowerCase() === "" ? value: value.name.toLowerCase().startsWith(search) || value.category.toLowerCase().startsWith(search))?.map((item) => (
             <tr key={item.id} className="hover:bg-gray-50 bg-white">
               <td className="p-3 border-b">
-                <Image src={item.images[0]} alt={item.name} width={200} height={200} quality={100} className="w-16 h-16 object-contain" />
+                <Image src={item?.images[0]} alt={item?.name} width={200} height={200} quality={100} className="w-16 h-16 object-contain" />
               </td>
               <td className="p-3 border-b font-medium">{item.name}</td>
               <td className="p-3 border-b font-medium">{item.description}</td>
