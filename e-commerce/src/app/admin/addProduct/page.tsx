@@ -17,7 +17,7 @@ const ProductForm = () => {
     category: "",
     price: "",
     quantity: "",
-    images: [],
+    images:[],
   });
 
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,8 @@ const ProductForm = () => {
 
       } else {
 
-        await addProduct(formDataObj);
+        const res = await addProduct(formDataObj);
+        
         alert("Product added successfully!");
         router.push("/admin/allProducts");
       }

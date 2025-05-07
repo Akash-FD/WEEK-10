@@ -14,12 +14,14 @@ const AllProduct = () => {
   const [search, setSearch] = useState("");
   const { setEditData, setProductId } = useEditProduct()
   const router = useRouter()
+   console.log(productData);
 
 
   useEffect(() => {
     const fetchAllProduct = async () => {
       try {
         const res = await GetAllProduct();
+        console.log(res?.data);
         setProductData(res.data.data);
       } catch (err) {
         console.log("somthing went worng", err);
@@ -56,7 +58,7 @@ const AllProduct = () => {
     <div className="w-full">
        <input type="search" placeholder="enter product or category"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-[95%] border bg-white sticky py-1 mb-3 px-2 focus:border-blue-500"/>
     <div className="w-full overflow-y-scroll h-[600px]">
-    {productData.length !== 0 ? (
+    {productData?.length !== 0 ? (
       <table className="w-full min-w-[1100px] border  border-gray-300">
         <thead className="bg-gray-200 ">
           <tr>
@@ -70,7 +72,7 @@ const AllProduct = () => {
           </tr>
         </thead>
         <tbody>
-          {productData.filter((value)=>search.toLowerCase() === "" ? value: value.name.toLowerCase().startsWith(search) || value.category.toLowerCase().startsWith(search))?.map((item) => (
+          {productData && productData.filter((value)=>search.toLowerCase() === "" ? value: value.name.toLowerCase().startsWith(search) || value.category.toLowerCase().startsWith(search))?.map((item) => (
             <tr key={item.id} className="hover:bg-gray-50 bg-white">
               <td className="p-3 border-b">
                 <Image src={item?.images[0]} alt={item?.name} width={200} height={200} quality={100} className="w-16 h-16 object-contain" />
