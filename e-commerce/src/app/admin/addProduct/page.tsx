@@ -82,9 +82,7 @@ const ProductForm = () => {
         router.push("/admin/allProducts");
 
       } else {
-
-        const res = await addProduct(formDataObj);
-        
+         await addProduct(formDataObj); 
         alert("Product added successfully!");
         router.push("/admin/allProducts");
       }

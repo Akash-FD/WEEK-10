@@ -4,7 +4,7 @@ import { resetPassword } from "@/lib/auth";
 import { ResetPasswordTpyes } from "@/type";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ReactFormState } from "react-dom/client";
+
 
 export default function ResetPassword() {
   const searchParams = useSearchParams();
