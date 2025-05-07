@@ -25,6 +25,7 @@ export interface adminForm {
     quantity : string,
     images : File[]
 }
+
 export interface allProductTypes {
     id: number,
     name : string,

@@ -45,7 +45,7 @@ export default function Login() {
 
           setTimeout(() => {
           
-          router.push("/admin");
+          router.push("/admin/allProducts");
         }, 1000);
       }
       else{
