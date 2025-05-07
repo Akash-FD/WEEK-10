@@ -8,8 +8,6 @@ const AllOrders = () => {
   const [search, setSearch] = useState("");
   const [editorder, setEditOrder] = useState<AllOrderData | null>(null);
 
-
-
   const fetchAllProduct = async () => {
     try {
       const res = await GetAllOrders();
@@ -25,7 +23,6 @@ const AllOrders = () => {
 
   const hanldeDelete = async (id: number) => {
     
-
     try {
       const res = await DeleteOneOrder(id);
       if (res.status === 200) {
@@ -37,11 +34,6 @@ const AllOrders = () => {
       console.log("somthing went worng", err);
     }
   };
-
-  // const hanldeEdit = async (id: number, status: string) => {
-  //   setOrderStatus(status);
-  //   setOrderId(id)
-  // };
 
   const updateStatus = async (id:number) => {
     try {
@@ -61,7 +53,6 @@ const AllOrders = () => {
     } catch (err) {
       console.log(err);
       
-  
     } finally{
       setEditOrder(null)
     }
@@ -70,11 +61,11 @@ const AllOrders = () => {
 
   return (
     <div className="">
-       <input type="search" placeholder="Search product or category"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-[95%] border bg-white sticky py-1 mb-3 px-2 focus:border-blue-500"/>
+       <input type="search" placeholder="Search order details"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-full border bg-white sticky py-1 mb-3 px-2 border-gray-300 focus:ring-blue-500"/>
 
-      <div className="w-full overflow-x-auto">
+      <div className="min-w-[800px] max-h-[500px] overflow-y-scroll">
         {orderData.length !== 0 ? (
-          <table className="w-full min-w-[600px] border border-gray-300">
+          <table className="w-full border border-gray-300 ">
             <thead className="bg-gray-100">
               <tr>
                 <th className="text-left p-3 border-b">Id</th>
@@ -115,7 +106,6 @@ const AllOrders = () => {
                           value={editorder.status}
                           onChange={(e) => setEditOrder({...editorder, status:(e.target.value)})}
                         >
-                          {/* <option value="">update Status</option> */}
                           <option value="PENDING">PENDING</option>
                           <option value="PROCESSING">PROCESSING</option>
                           <option value="SHIPPED">SHIPPED</option>

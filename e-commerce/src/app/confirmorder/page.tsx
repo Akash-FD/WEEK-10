@@ -11,11 +11,16 @@ export default function ConfirmOrder() {
   const [cartTotal, setCartTotal] = useState<number>(0);
   const [orderData, setOrderData] = useState<orderDataTypes[]>([]);
   const [address, setAddress] = useState<string>("");
+  const [city, setCity] = useState<string>("")
+  const [pinCode, setPinCode] = useState<number>(0)
+
   const router = useRouter();
 
   const orderDataObj: orderDataObj = {
     products: orderData,
     address: address,
+    city: city,
+    pincode: pinCode,
   };
 
 
@@ -109,19 +114,15 @@ export default function ConfirmOrder() {
             <div>
               <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
               <div className="flex flex-col gap-4">
-                <input type="text" placeholder="Enter your city" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-                <input type="text" placeholder="Enter your pincode" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-                
+                <input type="text"  value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter your city" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                <input type="text"  value={pinCode} onChange={(e) => setPinCode(Number(e.target.value))} placeholder="Enter your pincode" className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
                   <textarea
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="C block, landmark, area"
                     className="w-full border p-4 rounded-lg min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
                   ></textarea>
-    
               </div>
-
-          
               <div className="bg-gray-100 p-4 rounded-xl mt-6">
                 <h3 className="text-lg font-bold mb-4">Order Summary</h3>
                 <div className="flex justify-between mb-2">

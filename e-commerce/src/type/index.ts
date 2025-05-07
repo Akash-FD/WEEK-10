@@ -37,7 +37,6 @@ export interface allProductTypes {
 export interface addtocart {
     productId : number,
     quantity : number,
-   
 }
 
 export interface cartdataTypes {
@@ -54,9 +53,12 @@ export interface orderDataTypes {
     producyt_id: number,
     quantity : number,
 }
+
 export interface orderDataObj{
     products : orderDataTypes[],
     address : string,
+    city : string,
+    pincode: number,
 }
 
 export interface AllOrderData{

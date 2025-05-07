@@ -3,7 +3,6 @@
 import { FilterProduct } from "@/lib/api";
 import { filterTypes, productDataTypes } from "@/type";
 import Image from "next/image";
-
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -37,9 +36,7 @@ const Home = () => {
         }
       });
       const res = await FilterProduct(queryParams.toString());
-
-      
-      setProductData(res.data.data);
+      setProductData(res.data.products);
     } catch (err) {
       console.log("Something went wrong", err);
     }

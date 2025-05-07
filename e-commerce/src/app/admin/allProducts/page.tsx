@@ -14,8 +14,6 @@ const AllProduct = () => {
   const [search, setSearch] = useState("");
   const { setEditData, setProductId } = useEditProduct()
   const router = useRouter()
-   console.log(productData);
-
 
   useEffect(() => {
     const fetchAllProduct = async () => {
@@ -33,10 +31,7 @@ const AllProduct = () => {
   const hanldeDelete = async (id: number) => {
   
     try {
-      const res = await DeleteProduct(id);
-      // const getall = productData.filter((item)=>item.id !== id)
-      // setProductData(getall)
-    
+      const res = await DeleteProduct(id);    
       if (res.status === 200) {
         alert("product deleted");
         const getall = await GetAllProduct();
@@ -51,12 +46,11 @@ const AllProduct = () => {
     setEditData(item)
     setProductId(item.id)
     router.push("/admin/addProduct")
-
   }
     
   return (
     <div className="w-full">
-       <input type="search" placeholder="enter product or category"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-[95%] border bg-white sticky py-1 mb-3 px-2 focus:border-blue-500"/>
+       <input type="search" placeholder="Search product"  value={search} onChange={(e)=>setSearch(e.target.value)} className="w-full border bg-white sticky py-1 mb-3 px-2 focus:border-blue-500"/>
     <div className="w-full overflow-y-scroll h-[600px]">
     {productData?.length !== 0 ? (
       <table className="w-full min-w-[1100px] border  border-gray-300">
@@ -100,7 +94,6 @@ const AllProduct = () => {
     )}
   </div>
   </div>
-  
   
   );
 };
