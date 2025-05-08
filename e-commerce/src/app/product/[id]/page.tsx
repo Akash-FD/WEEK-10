@@ -132,7 +132,7 @@ const ProductInfoPage = () => {
                   </button>
                 </div>
                 <button
-                  className="py-2 w-[180px] px-5 text-md text-white bg-black hover:bg-red-800 max-sm:text-sm max-sm:w-[120px]"
+                  className="py-2 w-[180px] px-5 text-md text-white bg-black max-sm:text-sm max-sm:w-[120px]"
                   onClick={handleAddToCart}
                 >
                   Add to cart

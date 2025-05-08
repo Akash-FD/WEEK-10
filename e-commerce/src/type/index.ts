@@ -30,7 +30,7 @@ export interface allProductTypes {
     id: number,
     name : string,
     description : string,
-    category:string,
+    category: string,
     price : string,
     quantity : string,
     images : string[]

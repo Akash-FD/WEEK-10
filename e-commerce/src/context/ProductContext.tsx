@@ -1,4 +1,3 @@
-
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
@@ -17,7 +16,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [editData, setEditData] = useState<allProductTypes | null>(null);
   const [productId, setProductId] = useState<number | null>(null);
   
-
   return (
     <ProductContext.Provider  value={{ editData, setEditData, productId, setProductId }} >
       {children}

@@ -28,7 +28,7 @@ export default function Login() {
     try {
       const res = await LoginUser(formData);
       localStorage.setItem("token", res.data.token);
-       const userRes = await getUser()
+      const userRes = await getUser()
     
       if (userRes?.data.role === "ADMIN"){
         toast.success("Login successfully", {
@@ -119,7 +119,6 @@ export default function Login() {
             register
           </Link>
         </div>
-      
       </div>
       <ToastContainer/>
     </div>
