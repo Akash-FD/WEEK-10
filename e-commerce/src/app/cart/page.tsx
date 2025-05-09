@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import { BiSolidMinusCircle } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
 
-
 export default function Cart() {
   const [cartData, setCartData] = useState<cartdataTypes[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
@@ -54,7 +53,7 @@ export default function Cart() {
   };
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <div className="w-[80%] m-auto max-sm:w-[90%]">
         <div className="m-auto mt-6 p-4 max-sm:mt-2">
           <div className="addtocart">
@@ -85,6 +84,7 @@ export default function Cart() {
                       width={200}
                       height={100}
                       quality={100}
+                      priority={true}
                       className="w-[40px] object-contain m-auto"
                     />
                   </div>
@@ -121,7 +121,7 @@ export default function Cart() {
           </div>
         </div>
         <div className="cart-total p-2 flex flex-row-reverse gap-10 my-8 max-sm:flex-col max-sm:gap-5">
-          <div className="promo-code flex-[1] flex flex-col gap-5 max-sm:text-center max-sm:mt-5 max-sm:gap-2 max-sm:text-sm">
+          <div className="promo-code flex-[1] flex flex-col gap-5 max-sm:text-center max-sm:mt-5 max-sm:gap-2 max-sm:text-sm bg-gray-100 p-4 rounded-lg">
             <p>If you have any promo code, Enter it here</p>
             <div>
               <input
@@ -134,7 +134,7 @@ export default function Cart() {
               </button>
             </div>
           </div>
-          <div className="amount flex flex-col gap-2 flex-[1]">
+          <div className="amount flex flex-col gap-2 flex-[1] bg-gray-100 p-4 rounded-lg">
             <h2 className="font-bold text-2xl mb-3">Cart Total</h2>
             <div className="flex justify-between">
               <p>Subtotal</p>
@@ -152,12 +152,13 @@ export default function Cart() {
             </div>
             <hr />
             <div className="payment">
-              <Link
-                href="/confirmorder"
-                className="bg-yellow-400 mt-2 px-4 py-2 hover:bg-yellow-500"
-              >
-                Click to Pay
-              </Link>
+              {cartData.length !== 0 &&
+               <Link
+               href="/confirmorder"
+               className="bg-yellow-400 block text-center w-[150px] mt-3 px-4 py-2 hover:bg-yellow-500 rounded-md font-bold"
+             >
+               Click to Pay
+             </Link> }
             </div>
           </div>
         </div>

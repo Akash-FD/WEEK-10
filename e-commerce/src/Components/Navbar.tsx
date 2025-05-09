@@ -18,13 +18,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-    try{
-
-        const res = await getUser();
-        setUser(res.data);
-      }catch(err){
-        console.log(err);
-        
+      if (localStorage.getItem('token')) {
+        try{
+          const res = await getUser();
+          setUser(res.data);
+        }catch(err){
+          console.log(err);  
+        }
       }
       };
     fetchUser();
@@ -32,14 +32,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const cartLength = async () => {
+      if (localStorage.getItem('token')) {
       try{
-
         const res = await GetCartDetails();
         setCartLength(res.data.items.length);
       }catch(err){
         console.log(err);
         
       }
+    }
     };
     cartLength();
   }, [setCartLength]);

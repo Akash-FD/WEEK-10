@@ -48,7 +48,7 @@ const Home = () => {
 
   return (
     <div className="flex mx-auto py-8 px-4 gap-6 min-h-screen">
-      <div className="w-[280px] bg-white rounded-lg p-5 h-fit sticky top-24">
+      <div className="min-w-[200px] max-w-[250px] bg-white rounded-lg p-5 h-fit sticky top-24">
         <h1 className="text-2xl font-semibold mb-6">Filters</h1>
         <div className="mb-5">
           <label className="text-gray-700 mb-2 block font-semibold">
@@ -148,10 +148,10 @@ const Home = () => {
       <input
           type="text"
           name="search"
-          placeholder="Search by name"
+          placeholder="Search product"
           value={filters.search}
           onChange={handleChange}
-          className="w-[500px] mb-5 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-all"
+          className="w-[60%]  mb-5 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-all"
         />
         {productData?.length === 0 ? (
           <p className="text-center text-xl font-semibold">
@@ -162,7 +162,7 @@ const Home = () => {
             {productData?.map((item) => (
               <Link href={`/product/${item.id}`}
                 key={item.id}
-                className="card w-[250px] overflow-hidden max-lg:w-[200px] max-md:w-[140px] shadow-lg p-4 hover:scale-105 transition-all duration-200"
+                className="card w-[250px] overflow-hidden max-md:w-[200px] shadow-lg p-4 hover:scale-105 transition-all duration-200"
               >
                 <div className="h-[220px] bg-gray-100 flex items-center justify-center overflow-hidden rounded">
                   <Image src={item.images[0]}
@@ -170,6 +170,7 @@ const Home = () => {
                     width={200}
                     height={200}
                     quality={100}
+                    priority={true}
                     className="min-lg:h-full min-lg:w-full min-lg:object-contain"
                   />
                 </div>

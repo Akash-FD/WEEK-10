@@ -21,7 +21,6 @@ export default function VerifyEmail() {
     } catch (err) {
       console.log(err);
       
-    
     }
   };
 

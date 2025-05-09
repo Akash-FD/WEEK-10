@@ -3,7 +3,7 @@ import { useCartContext } from "@/context/CartContext";
 import { AddProductCart, GetCartDetails, ProductInfo } from "@/lib/api";
 import { addtocart, allProductTypes } from "@/type";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
@@ -12,6 +12,7 @@ const ProductInfoPage = () => {
   const [productDataById, setProductDataById] = useState<allProductTypes | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const {setCartLength} = useCartContext()
+  const router = useRouter()
 
 
   const CartData: addtocart = {
@@ -35,69 +36,82 @@ const ProductInfoPage = () => {
  
 
   const handleAddToCart = async () => {
-    try {
-      await AddProductCart(CartData);
-      toast.success("Add to Cart successfully", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-        });
- 
-        const cartres = await GetCartDetails();
-        setCartLength(cartres.data?.items?.length);
-
-    } catch (err) {
-      console.log("somthng went wrong", err);
+    if (localStorage.getItem('token')) {
+      try {
+        await AddProductCart(CartData);
+        toast.success("Add to Cart successfully", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+   
+          const cartres = await GetCartDetails();
+          setCartLength(cartres.data?.items?.length);
+  
+      } catch (err) {
+        console.log("somthng went wrong", err);
+      }  
+    }else{
+      alert('You have to Login first')
+      router.push("/login")
     }
+   
   };
 
   return (
     <div className="min-h-screen">
       <div className="container w-full mx-auto pt-5">
-          <div className="flex flex-wrap gap-5 justify-center">
+          <div className="flex flex-wrap gap-5 justify-center items-start">
             <div className="flex gap-8 ">
+                {productDataById && 
               <div className="display">
                 <Image
-                  src={productDataById?.images[0] || "/placeholder-image.png"}
-                  alt={productDataById?.name || ""}
+                  src={productDataById?.images[0]}
+                  alt={productDataById?.name}
                   width={100}
                   height={100}
-                  quality={100}
+                  quality={95}
+                  priority={true}
                   className="w-[80px] mb-3"
                 />
                  <Image
-                  src={productDataById?.images[0] || "/placeholder-image.png"}
-                  alt={productDataById?.name || ""}
+                  src={productDataById?.images[0]}
+                  alt={productDataById?.name}
                   width={100}
                   height={100}
-                  quality={100}
+                  quality={95}
+                  priority={true}
                   className="w-[80px] mb-3"
                 />
                  <Image
-                  src={productDataById?.images[0] || "/placeholder-image.png"}
-                  alt={productDataById?.name || ""}
+                  src={productDataById?.images[0]}
+                  alt={productDataById?.name}
                   width={100}
                   height={100}
-                  quality={100}
+                  quality={95}
+                  priority={true}
                   className="w-[80px] mb-3"
                 />
                  <Image
-                  src={productDataById?.images[0] || "/placeholder-image.png"}
-                  alt={productDataById?.name || ""}
+                  src={productDataById?.images[0]}
+                  alt={productDataById?.name}
                   width={100}
                   height={100}
-                  quality={100}
-                  className="w-[80px] mb-3"
+                  quality={95}
+                  priority={true}
+                  className="w-[80px]"
                 />
               </div>
-              <div className="w-[350px]">
-                <Image src={productDataById?.images[0] || "/placeholder-image.png"} alt={productDataById?.name || ""} width={300} height={300} quality={100} className="w-full h-full object-contain" />
+              }
+              <div className="w-[352px]">
+                
+                {productDataById && <Image src={productDataById?.images[0]} alt={productDataById?.name} width={300} height={300} quality={95} priority={true} className="w-full h-full object-contain" />}
               </div>
             </div>
           
